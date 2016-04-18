@@ -1,0 +1,15 @@
+{% extends "CoreBundle::layout.html.twig" %}
+
+{% block body %}
+    <h1>Billeterie</h1>
+    <hr>
+    <div id="menuChoisTicket">
+        <h3>Achat de billet : </h3>
+        <br/>
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="{{ path('billeterie_ticketadd') }}">Continuer</a>
+                <hr width="25%" align="left">
+            </li>
+        </ul>
+    </div>
+{% endblock %}

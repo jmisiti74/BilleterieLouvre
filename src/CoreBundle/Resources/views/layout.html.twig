@@ -1,5 +1,4 @@
 {# src/CoreBundle/Resources/views/layout.html.twig #}
-
 <!DOCTYPE html>
 <html>
 
@@ -15,34 +14,42 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <!-- Le HEADER -->
-        <div id="header" style="background-color:rgba(143, 126, 116, 0.4);" class="row">
-            <div class="col-md-offset-7 col-xs-2">
-                <img src="../img/mousee-louvre-logo-2.png" alt="LogoLouvre" href="" />
+        <div id="header" style="background-color:rgba(150, 124, 92, 1);" class="row">
+            <div class="col-md-offset-8 col-xs-2">
+                <img src="/BilleterieLouvre/web/img/LogoLouvre.png" alt="LogoLouvre" href="" />
             </div>
         </div>
         
-        <!-- Le Corps de la page -->
+        
         <div class="row">
-            <div id="menu" class="col-md-2">
+            <!-- Le Menu de Navigation -->
+            <div id="menu" class="col-md-1">
                 <h3>Navigation</h3>
                 <ul class="nav nav-pills nav-stacked">
-                    <li><a href="">Accueil</a></li>
-                    <li><a href="">Ajouter une annonce</a></li>
-                    <li><a href="">S'identifier</a></li>
+                    <li><a href="{{ path('core') }}">Accueil</a></li>
+                    <li><a href="{{ path('billeterie') }}">Billeterie</a></li>
+                    <li><a href="">Plus d'infos</a></li>
+                    <li><a href="{{ path('panier') }}">Panier</a></li>
+                    <li><a href="">Contact</a></li>
                 </ul>
             </div>
-            <div id="content" class="col-md-10">
-                <br/> {% block body %} {% endblock %}
+            <!-- Le Corps de la page -->
+            <div id="content" class="col-md-offset-1 col-md-9">
+                <br/> 
+                {% for flashMessage in app.session.flashbag.get('alert') %}
+                    <div class="alert alert-info">{{ flashMessage }}</div>
+                {% endfor %}
+                {% block body %} {% endblock %}
             </div>
         </div>
         <!-- Le FOOTER -->
-            
-        <div class="row" style="background-color:rgba(143, 126, 116, 0.4);">
+            <!-- ATTENTION REGLAGE DE LA MARGE A FAIRE POUR QUE TOUT LE TEXTE DE LA PAGE SOIT VISIBLE ET NON CACHER SOUS LE FOOTER -->
+        <div class="row navbar-fixed-bottom" style="background-color:rgba(150, 124, 92, 1);">
             <footer>
                 <br/>
-                <p style="text-align:center;"> &nbsp Musée du Louvre © {{ 'now'|date('Y') }}.</p>
+                <p style="text-align:center;">Musée du Louvre © {{ 'now'|date('Y') }}.</p>
             </footer>
         </div>
     </div>

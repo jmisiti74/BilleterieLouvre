@@ -1,0 +1,8 @@
+{% extends "CoreBundle::layout.html.twig" %}
+
+{% block body %}
+    <h3>Panier : </h3>
+        {% for item in panier %}
+            <li>{{ item.codeUnique }}</li>
+        {% endfor %}
+{% endblock %}
