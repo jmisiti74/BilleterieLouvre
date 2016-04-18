@@ -3,6 +3,11 @@
 {% block body %}
     <h3>Panier : </h3>
         {% for item in panier %}
-            <li>{{ item.codeUnique }}</li>
+            <div class="well">
+                <span><b>Nom :</b> {{ item.nom }}</span>
+                <span><b>Prénom :</b> {{ item.prenom }}</span>
+                <span style="float:right;"><b>Réservé pour le :</b> {{ item.dateReservation|date('d/m/y') }}</span>
+                <button style="margin:auto;" class="btn btn-danger">Supprimer</button>
+            </div>
         {% endfor %}
 {% endblock %}
