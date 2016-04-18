@@ -10,6 +10,7 @@
 
     {% block stylesheets %}
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/BilleterieLouvre/web/Ressources/JS/jquery-ui/jquery-ui.css">
     {% endblock %}
 </head>
 
@@ -18,7 +19,7 @@
         <!-- Le HEADER -->
         <div id="header" style="background-color:rgba(150, 124, 92, 1);" class="row">
             <div class="col-md-offset-8 col-xs-2">
-                <img src="/BilleterieLouvre/web/img/LogoLouvre.png" alt="LogoLouvre" href="" />
+                <img src="/BilleterieLouvre/web/Ressources/img/LogoLouvre.png" alt="LogoLouvre" href="" />
             </div>
         </div>
         
@@ -54,8 +55,14 @@
         </div>
     </div>
     {% block javascripts %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <script         src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script
+        src="/BilleterieLouvre/web/Ressources/JS/jquery-ui/jquery-ui.js">
+        </script>
+        <script
+        src="/BilleterieLouvre/web/Ressources/JS/Billeterie.js">
+        </script>
     {% endblock %}
 
 </body>

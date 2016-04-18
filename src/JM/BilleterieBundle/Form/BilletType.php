@@ -20,7 +20,9 @@ class BilletType extends AbstractType
                 'property' => 'name',
                 'multiple' => false
             ))
-            ->add('dateReservation', 'date')
+            ->add('dateReservation', 'date',array('required' => false,
+                                                      'widget' =>'single_text',
+                                                      'format' =>'dd/MM/yyyy'))
             ->add('tarifReduit')
             ->add('nom')
             ->add('prenom')

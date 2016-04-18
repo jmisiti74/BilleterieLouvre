@@ -4,6 +4,52 @@
     <h3>Création de votre billet</h3>
 
     <div class="well">
-        {{ form(form) }}
+        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+            
+    {{ form_errors(form) }}
+    <!-- Champs Date de la réservation -->
+    <div class="form-group">
+      {{ form_label(form.dateReservation, "Date de la réservation : ", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+      {{ form_errors(form.dateReservation) }}
+
+      <div class="col-sm-4">
+        {{ form_widget(form.dateReservation, { 'attr': {'class': 'datepicker'}}) }}
+      </div>
+    </div>
+    
+    <!-- Champs Type du Billet -->
+    <div class="form-group">
+      {# Génération du label. #}
+      {{ form_label(form.type, "Type de Billet : ", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+      {{ form_errors(form.type) }}
+
+      <div class="col-sm-4">
+        {{ form_widget(form.type) }}
+      </div>
+    </div>
+            
+    <!-- Champs Tarif Réduit -->
+    <div class="form-group">
+      {# Génération du label. #}
+      {{ form_label(form.tarifReduit, "Option tarif réduit : ", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+      {{ form_errors(form.tarifReduit) }}
+
+      <div class="col-sm-4">
+        {{ form_widget(form.tarifReduit) }}
+      </div>
+    </div>
+  {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+  {{ form_widget(form.Enregistrer, {'attr': {'class': 'btn btn-primary'}}) }}
+
+  {# Génération automatique des champs pas encore écrits.
+     Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+     et tous les champs cachés (type « hidden »). #}
+  {{ form_rest(form) }}
+  
+  {# Fermeture de la balise <form> du formulaire HTML #}
+  {{ form_end(form) }}
     </div> 
 {% endblock %}
