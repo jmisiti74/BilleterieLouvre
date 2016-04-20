@@ -93,7 +93,7 @@ class TicketController extends Controller
                 $request->getSession()->getFlashBag()->add('alert', 'Billet enregistrer avec succès dans le panier');
             } else {
                 /* Si le billet n'est pas valider on affiche un méssage d'érreur */
-                $request->getSession()->getFlashBag()->add('alert', 'ERREUR');                
+                $request->getSession()->getFlashBag()->add('alert', $_SESSION["Error"]);                
             }
             return $this->redirect($this->generateUrl('billeterie'));
         }
