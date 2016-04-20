@@ -2,12 +2,42 @@
 
 {% block body %}
     <h3>Panier : </h3>
-        {% for item in panier %}
-            <div class="well">
-                <span><b>Nom :</b> {{ item.nom }}</span>
-                <span><b>Prénom :</b> {{ item.prenom }}</span>
-                <span style="float:right;"><b>Réservé pour le :</b> {{ item.dateReservation|date('d/m/y') }}</span>
-                <button style="margin:auto;" class="btn btn-danger">Supprimer</button>
-            </div>
-        {% endfor %}
+    <table class="table-striped table-bordered table-responsive">
+        <tbody>
+            <tr>
+                <th>Prénom</th>  
+                <th>Nom</th>  
+                <th>Date de la réservation</th>
+                <th>Type de Billet</th>
+                <th>Demi-Journée</th>
+            </tr>
+            {% for billet in panier %}
+                <tr>
+                            
+                    {# Prénom du client #}       
+                    <td>{{ billet.prenom }}</td>
+                            
+                    {# Nom du client #}        
+                    <td>{{ billet.nom }}</td>
+                            
+                    {# La date de la réservation #}  
+                    <td>{{ billet.dateReservation|date('d/m/Y') }}</td>
+                            
+                    {# Le Type de billet #}
+                    <td>{{ billet.type.name }}</td>
+                            
+                    {# Demi Journée #}       
+                    <td>{% if billet.demiJour == true %}
+                            Oui
+                        {% else %}
+                            Non
+                        {% endif %}
+                    </td>
+                    {# Bouton supprimer #}
+                    <td><button id="{{ billet.codeUnique }}" class="btn btn-danger">Supprimer</button></td>
+                            
+                </tr>
+            {% endfor %}   
+        </tbody>
+    </table>
 {% endblock %}

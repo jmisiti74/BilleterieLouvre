@@ -17,7 +17,8 @@ class Billet
     {
         $this->dateCreation = new \DateTime();
         $this->dateReservation = new \DateTime();
-        $this->dateReservation->modify('+1 day');
+        $this->dateNaissance = new \DateTime();
+        $this->dateNaissance->modify('-26 years');
     }
     /**
      * @var int
@@ -34,6 +35,13 @@ class Billet
      * @ORM\Column(name="dateCreation", type="date")
      */
     private $dateCreation;
+    
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="demiJour", type="boolean")
+     */
+    private $demiJour;
 
     /**
      * @var \DateTime
@@ -344,5 +352,29 @@ class Billet
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Set demiJour
+     *
+     * @param boolean $demiJour
+     *
+     * @return Billet
+     */
+    public function setDemiJour($demiJour)
+    {
+        $this->demiJour = $demiJour;
+
+        return $this;
+    }
+
+    /**
+     * Get demiJour
+     *
+     * @return boolean
+     */
+    public function getDemiJour()
+    {
+        return $this->demiJour;
     }
 }

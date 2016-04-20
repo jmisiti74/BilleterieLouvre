@@ -1,5 +1,5 @@
 billeterie_ticketadd:
-    path:   /creationTicket
+    path:   /{demiJour}
     defaults: { _controller: JMBilleterieBundle:Ticket:addTicket }
     
 billeterie:

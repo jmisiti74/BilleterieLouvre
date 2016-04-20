@@ -34,6 +34,13 @@ class Billet
      * @ORM\Column(name="dateCreation", type="date")
      */
     private $dateCreation;
+    
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="demiJour", type="boolean")
+     */
+    private $demiJour;
 
     /**
      * @var \DateTime
@@ -320,5 +327,29 @@ class Billet
     public function getDateNaissance()
     {
         return $this->dateNaissance;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Billet
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 }

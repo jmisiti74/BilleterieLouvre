@@ -10,7 +10,7 @@
 
     {% block stylesheets %}
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/BilleterieLouvre/web/Ressources/JS/jquery-ui/jquery-ui.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     {% endblock %}
 </head>
 
@@ -24,7 +24,7 @@
         </div>
         
         
-        <div class="row">
+        <div class="row" style="margin-bottom:75px;">
             <!-- Le Menu de Navigation -->
             <div id="menu" class="col-md-1">
                 <h3>Navigation</h3>
@@ -55,14 +55,10 @@
         </div>
     </div>
     {% block javascripts %}
-        <script         src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        <script
-        src="/BilleterieLouvre/web/Ressources/JS/jquery-ui/jquery-ui.js">
-        </script>
-        <script
-        src="/BilleterieLouvre/web/Ressources/JS/Billeterie.js">
-        </script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script src="/BilleterieLouvre/web/Ressources/JS/Billeterie.js"></script>
     {% endblock %}
 
 </body>

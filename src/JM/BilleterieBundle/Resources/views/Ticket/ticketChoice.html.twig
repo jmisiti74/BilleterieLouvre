@@ -7,9 +7,13 @@
         <h3>Achat de billet : </h3>
         <br/>
         <ul class="nav nav-pills nav-stacked">
-            <li><a href="{{ path('billeterie_ticketadd') }}">Continuer</a>
+            <li><a href="{{ path('billeterie_ticketadd', {'demiJour': 'false' }) }}">Journée</a>
+                <hr width="25%" align="left">
+            </li>
+            <li><a href="{{ path('billeterie_ticketadd', {'demiJour': 'true' }) }}">Demi-Journée</a>
                 <hr width="25%" align="left">
             </li>
         </ul>
+        <span title="Demi-Journée = Entré disponnible à partir de 14H." class="col-md-offset-1"><u>Info ?</u></span>
     </div>
 {% endblock %}

@@ -17,7 +17,6 @@ class LoadCategory implements FixtureInterface
       'Basique',
       'Enfant',
       'Senior',
-      'Reduit',
       'Famille'
     );
 
