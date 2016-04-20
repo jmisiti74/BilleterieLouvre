@@ -1,4 +1,6 @@
-BilleterieLouvre
+Billeterie du Louvre
 ================
 
-A Symfony project created on April 13, 2016, 3:12 pm.
+Un projet Symfony crée le 13 avril 2016 a 15H00.
+
+Objectif : Vente de billet en ligne pour le Musée du Louvre
