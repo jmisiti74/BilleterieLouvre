@@ -31,8 +31,8 @@ class JMVerifBillet
         }
         
         /* On vérifie que la réservation n'est pas pour les jours interdits */
-        if(($dateReservation->format('j n') === '1 5') || ($dateReservation->format('j n') === '1 11') || ($dateReservation->format('j n') === '25 12') || ($dateReservation->format('%w') === '%2')){
-            $_SESSION["Error"] = 'Vous ne pouvez pas commander de billet pour le ' . $dateReservation->format('d/m/Y ') . ', nous sommes fermer ! Cliquez sur "Plus d\'infos" pour voir les dates ou le musée est fermée.';
+        if(($dateReservation->format('j n') === '1 5') || ($dateReservation->format('j n') === '1 11') || ($dateReservation->format('j n') === '25 12') || ($dateReservation->format('j n') === '1 1') || ($dateReservation->format('j n') === '28 3') || ($dateReservation->format('j n') === '1 5') || ($dateReservation->format('j n') === '8 5') || ($dateReservation->format('j n') === '5 5') || ($dateReservation->format('j n') === '16 5') || ($dateReservation->format('j n') === '14 7') || ($dateReservation->format('j n') === '15 8') || ($dateReservation->format('j n') === '1 11') || ($dateReservation->format('j n') === '11 11') || ($dateReservation->format('%w') === '%2') || ($dateReservation->format('%w') === '%0')){
+            $_SESSION["Error"] = 'Vous ne pouvez pas réserver de billet pour le ' . $dateReservation->format('d/m/Y ') . '. Cliquez sur "Plus d\'infos" pour voir les dates ou la réservation de billet est indisponnible.';
             return false;
         }
         
