@@ -4,12 +4,4 @@ jm_contact:
 
 jm_billeterie:
     resource: "@JMBilleterieBundle/Resources/config/routing.yml"
-    prefix:   /Billeterie
-
-core:
-    path:   /
-    defaults: { _controller: CoreBundle:Home:view }
-    
-panier:
-    path:   /Panier
-    defaults: { _controller: JMBilleterieBundle:Ticket:panier }
+    prefix:   /

@@ -1,0 +1,43 @@
+{% extends "layout.html.twig" %}
+
+{% block body %}
+<h3>Création de billet - {% if demiJour == 'true' %}Demi-journée - A partir de 14H {% else %} Journée {% endif %} - Etape 1</h3>
+
+    <div class="well">
+        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+        {{ form_errors(form) }}
+
+        <!-- Nombre de Billets -->
+        <div class="form-group">
+          {# Génération du label. #}
+          {{ form_label(form.nombre, "Combien de billet voulez-vous : ", {'label_attr': {'class': 'col-md-2 control-label'}}) }}
+
+          {{ form_errors(form.nombre) }}
+
+          <div class="col-md-4">
+            {{ form_widget(form.nombre) }}
+          </div>
+        </div>
+
+        <!-- Date de reservation -->
+        <div class="form-group">
+          {# Génération du label. #}
+          {{ form_label(form.dateReservation, "Pour quand voulez-vous réserver : ", {'label_attr': {'class': 'col-md-2 control-label'}}) }}
+
+          {{ form_errors(form.dateReservation) }}
+
+          <div class="col-md-4">
+            {{ form_widget(form.dateReservation) }}
+          </div>
+        </div>
+
+         {# Génération automatique des champs pas encore écrits.
+         Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+         et tous les champs cachés (type « hidden »). #}
+         {{ form_rest(form) }}
+
+        {# Fermeture de la balise <form> du formulaire HTML #}
+        {{ form_end(form) }}
+    </div> 
+{% endblock %}

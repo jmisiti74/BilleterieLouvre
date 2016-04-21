@@ -5,8 +5,9 @@ namespace JM\BilleterieBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\CountryType;
-class BilletType extends AbstractType
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
+
+class NbrBilletType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,13 +16,11 @@ class BilletType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('tarifReduit')
-            ->add('nom')
-            ->add('prenom')
-            ->add('pays', CountryType::class)
-            ->add('email')
-            ->add('dateNaissance', 'date',array( 'widget' =>'single_text', ))
-            ->add('Enregistrer', 'submit')
+            ->add('nombre')
+            ->add('dateReservation', 'date', array(
+                'widget' => 'single_text'
+            ))
+            ->add('Suivant', 'submit')
         ;
     }
     
@@ -31,7 +30,7 @@ class BilletType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'JM\BilleterieBundle\Entity\Billet'
+            'data_class' => 'JM\BilleterieBundle\Entity\nbBillet'
         ));
     }
 }

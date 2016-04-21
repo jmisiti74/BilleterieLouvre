@@ -1,4 +1,4 @@
-{% extends "CoreBundle::layout.html.twig" %}
+{% extends "layout.html.twig" %}
 
 {% block body %}
     <h3>Panier : </h3>
@@ -8,7 +8,6 @@
                 <th>Prénom</th>  
                 <th>Nom</th>  
                 <th>Date de la réservation</th>
-                <th>Type de Billet</th>
                 <th>Demi-Journée</th>
             </tr>
             {% for billet in panier %}
@@ -23,9 +22,6 @@
                     {# La date de la réservation #}  
                     <td>{{ billet.dateReservation|date('d/m/Y') }}</td>
                             
-                    {# Le Type de billet #}
-                    <td>{{ billet.type.name }}</td>
-                            
                     {# Demi Journée #}       
                     <td>{% if billet.demiJour == true %}
                             Oui
@@ -34,7 +30,7 @@
                         {% endif %}
                     </td>
                     {# Bouton supprimer #}
-                    <td><button id="{{ billet.codeUnique }}" class="btn btn-danger">Supprimer</button></td>
+                    <td><button id="{{ billet.codeUnique }}" onclick="deleteThis({{ billet.id }});" class="btn btn-danger">Supprimer</button></td>
                             
                 </tr>
             {% endfor %}   

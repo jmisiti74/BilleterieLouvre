@@ -16,7 +16,6 @@ class Billet
     public function __construct()
     {
         $this->dateCreation = new \DateTime();
-        $this->dateReservation = new \DateTime();
         $this->dateNaissance = new \DateTime();
         $this->dateNaissance->modify('-26 years');
     }

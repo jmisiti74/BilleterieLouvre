@@ -1,7 +1,15 @@
-billeterie_ticketadd:
-    path:   /{demiJour}
-    defaults: { _controller: JMBilleterieBundle:Ticket:addTicket }
+billeterie_ticketadde1:
+    path:   /Creation/Etape1/{demiJour}
+    defaults: { _controller: JMBilleterieBundle:Ticket:addTicketE1 }
+
+billeterie_ticketadde2:
+    path:   /Creation/Etape2/{demiJour}/{nbBillet}
+    defaults: { _controller: JMBilleterieBundle:Ticket:addTicketE2 }
     
 billeterie:
     path:   /
     defaults: { _controller: JMBilleterieBundle:Ticket:view }
+    
+billeterie_panier:
+    path:   /Panier
+    defaults: { _controller: JMBilleterieBundle:Ticket:panier }

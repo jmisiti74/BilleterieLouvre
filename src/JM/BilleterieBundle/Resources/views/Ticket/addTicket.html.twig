@@ -1,34 +1,12 @@
-{% extends "CoreBundle::layout.html.twig" %}
+{% extends "layout.html.twig" %}
 
 {% block body %}
-<h3>Création de votre billet - {% if demiJour == 'true' %}Demi-journée - A partir de 14H {% else %} Journée {% endif %}</h3>
+<h3>Création de{% if nbBillet > 1 %} vos billets{% else %} votre billet{% endif %} - {% if demiJour == 'true' %}Demi-journée - A partir de 14H {% else %} Journée {% endif %} - Etape 2 - Billet restant : {{ nbBillet }}</h3>
 
     <div class="well">
         {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
             
     {{ form_errors(form) }}
-    <!-- Champs Date de la réservation -->
-    <div class="form-group">
-      {{ form_label(form.dateReservation, "Date de la réservation : ", {'label_attr': {'class': 'col-md-2 control-label'}}) }}
-
-      {{ form_errors(form.dateReservation) }}
-
-      <div class="col-md-4">
-        {{ form_widget(form.dateReservation) }}
-      </div>
-    </div>
-    
-    <!-- Champs Type du Billet -->
-    <div class="form-group">
-      {# Génération du label. #}
-      {{ form_label(form.type, "Type de Billet : ", {'label_attr': {'class': 'col-md-2 control-label'}}) }}
-
-      {{ form_errors(form.type) }}
-
-      <div class="col-md-4">
-        {{ form_widget(form.type) }}
-      </div>
-    </div>
             
     <!-- Champs Tarif Réduit -->
     <div class="form-group">
