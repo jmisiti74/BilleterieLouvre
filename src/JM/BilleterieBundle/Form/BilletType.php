@@ -16,10 +16,8 @@ class BilletType extends AbstractType
     {
         $builder
             ->add('tarifReduit')
-            ->add('nom')
             ->add('prenom')
             ->add('pays', CountryType::class)
-            ->add('email')
             ->add('dateNaissance', 'date',array( 'widget' =>'single_text', ))
             ->add('Enregistrer', 'submit')
         ;

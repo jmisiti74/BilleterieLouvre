@@ -5,35 +5,57 @@
     <table class="table-striped table-bordered table-responsive">
         <tbody>
             <tr>
-                <th>Prénom</th>  
-                <th>Nom</th>  
-                <th>Date de la réservation</th>
-                <th>Demi-Journée</th>
+                <th style="width:100px;text-align:center;">Prénom</th>  
+                <th style="width:100px;text-align:center;">Nom</th>  
+                <th style="width:100px;text-align:center;">Date de naissance</th>  
+                <th style="width:125px;text-align:center;">Demi-Journée</th>
+                <th style="width:125px;text-align:center;">Tarif réduit</th>
+                <th style="width:100px;text-align:center;">Date de la réservation</th>  
+                <th style="width:125px;text-align:center;">Prix</th>
             </tr>
             {% for billet in panier %}
                 <tr>
                             
                     {# Prénom du client #}       
-                    <td>{{ billet.prenom }}</td>
+                    <td style="text-align:center;">{{ billet.prenom }}</td>
                             
                     {# Nom du client #}        
-                    <td>{{ billet.nom }}</td>
+                            
+                            
+                    <td style="text-align:center;">{{ billet.nom }}</td>
                             
                     {# La date de la réservation #}  
-                    <td>{{ billet.dateReservation|date('d/m/Y') }}</td>
+                    <td style="text-align:center;">{{ billet.dateNaissance|date('d/m/Y') }}</td>
                             
                     {# Demi Journée #}       
-                    <td>{% if billet.demiJour == true %}
+                    <td style="text-align:center;">{% if billet.demiJour == true %}
                             Oui
                         {% else %}
                             Non
                         {% endif %}
                     </td>
+                            
+                    {# Demi Journée #}       
+                    <td style="text-align:center;">{% if billet.tarifReduit == true %}
+                                {% if billet.prix == 10 %}Oui{% else %}Oui mais non appliqué. {% endif %} 
+                        {% else %}
+                            Non
+                        {% endif %}
+                    </td>
+                            
+                    {# La date de la réservation #}  
+                    <td style="text-align:center;">{{ billet.dateReservation|date('d/m/Y') }}</td>
+                            
+                    {# Prix du billet #}        
+                    <td style="text-align:center;">{% if billet.prix == 0 %}Gratuit{% elseif billet.prix == 99 %}Tarif Famille{% else %}{{ billet.prix }} €{% endif %}</td>
+                            
                     {# Bouton supprimer #}
-                    <td><button id="{{ billet.codeUnique }}" onclick="deleteThis({{ billet.id }});" class="btn btn-danger">Supprimer</button></td>
+                    <td><a href="{{ path('billeterie_panier_vider', {'id': billet.codeUnique  }) }}"><button class="btn btn-danger">Supprimer</button></a></td>
                             
                 </tr>
             {% endfor %}   
         </tbody>
     </table>
+    <br/>
+    <p>* F = Famille</p>
 {% endblock %}

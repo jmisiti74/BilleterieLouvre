@@ -1,3 +1,0 @@
-contact:
-    path:   /
-    defaults: { _controller: JMContactBundle:Contact:view }

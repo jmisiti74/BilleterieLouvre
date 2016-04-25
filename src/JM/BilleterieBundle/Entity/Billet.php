@@ -18,6 +18,8 @@ class Billet
         $this->dateCreation = new \DateTime();
         $this->dateNaissance = new \DateTime();
         $this->dateNaissance->modify('-26 years');
+        $this->payer = false;
+        $this->prix = 125;
     }
     /**
      * @var int
@@ -27,7 +29,7 @@ class Billet
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
+    
     /**
      * @var \DateTime
      *
@@ -97,12 +99,26 @@ class Billet
      * @ORM\Column(name="email", type="string", length=255)
      */
     private $email;
-    
-    /**
-	 * @ORM\ManyToOne(targetEntity="JM\BilleterieBundle\Entity\Type", cascade={"persist"})
-	 */
-	private $type;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="payer", type="boolean")
+     */
+    private $payer;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="prix", type="integer")
+     */
+    private $prix;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="JM\BilleterieBundle\Entity\Panier")
+     */
+    private $panier;
+    
     /**
      * Get id
      *
@@ -111,30 +127,6 @@ class Billet
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     *
-     * @return Billet
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     /**
@@ -352,7 +344,19 @@ class Billet
     {
         return $this->email;
     }
+    
+    public function getMajeur()
+    {
+        return $this->majeur;
+    }
+    
+    public function setMajeur($majeur)
+    {
+        $this->majeur = $majeur;
 
+        return $this;
+    }
+    
     /**
      * Set demiJour
      *
@@ -375,5 +379,108 @@ class Billet
     public function getDemiJour()
     {
         return $this->demiJour;
+    }
+
+    /**
+     * Set payer
+     *
+     * @param boolean $payer
+     *
+     * @return Billet
+     */
+    public function setPayer($payer)
+    {
+        $this->payer = $payer;
+
+        return $this;
+    }
+
+    /**
+     * Get payer
+     *
+     * @return boolean
+     */
+    public function getPayer()
+    {
+        return $this->payer;
+    }
+
+    /**
+     * Set prix
+     *
+     * @param integer $prix
+     *
+     * @return Billet
+     */
+    public function setPrix($prix)
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    /**
+     * Get prix
+     *
+     * @return integer
+     */
+    public function getPrix()
+    {
+        return $this->prix;
+    }
+
+    /**
+     * Set moinsDeQuatreAns
+     *
+     * @param boolean $moinsDeQuatreAns
+     *
+     * @return Billet
+     */
+    public function setBilletValider($billetValider)
+    {
+        $this->billetValider = $billetValider;
+
+        return $this;
+    }
+
+    /**
+     * Get moinsDeQuatreAns
+     *
+     * @return boolean
+     */
+    public function getBilletValider()
+    {
+        return $this->billetValider;
+    }
+    
+    public function getAge()
+    {
+        $anniv = $this->getDateNaissance();
+        $age = $anniv->diff(new \DateTime(), true)->y;
+        return $age;
+    }
+
+    /**
+     * Set panier
+     *
+     * @param \JM\BilleterieBundle\Entity\Panier $panier
+     *
+     * @return Billet
+     */
+    public function setPanier(\JM\BilleterieBundle\Entity\Panier $panier = null)
+    {
+        $this->panier = $panier;
+
+        return $this;
+    }
+
+    /**
+     * Get panier
+     *
+     * @return \JM\BilleterieBundle\Entity\Panier
+     */
+    public function getPanier()
+    {
+        return $this->panier;
     }
 }

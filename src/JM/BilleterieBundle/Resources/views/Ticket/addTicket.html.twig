@@ -29,16 +29,6 @@
         {{ form_widget(form.dateNaissance) }}
       </div>
     </div>
-    <!-- Champs De Nom -->
-    <div class="form-group">
-      {{ form_label(form.nom, "Nom de famille : ", {'label_attr': {'class': 'col-md-2 control-label'}}) }}
-
-      {{ form_errors(form.nom) }}
-
-      <div class="col-md-4">
-        {{ form_widget(form.nom) }}
-      </div>
-    </div>
     <!-- Champs De Prénom -->
     <div class="form-group">
       {{ form_label(form.prenom, "Prénom : ", {'label_attr': {'class': 'col-md-2 control-label'}}) }}
@@ -47,16 +37,6 @@
 
       <div class="col-md-4">
         {{ form_widget(form.prenom) }}
-      </div>
-    </div>
-    <!-- Champs De eMail -->
-    <div class="form-group">
-      {{ form_label(form.email, "E-mail : ", {'label_attr': {'class': 'col-md-2 control-label'}}) }}
-
-      {{ form_errors(form.email) }}
-
-      <div class="col-sm-4">
-        {{ form_widget(form.email) }}
       </div>
     </div>
     <!-- Champs De Pays -->

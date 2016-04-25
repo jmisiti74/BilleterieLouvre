@@ -2,3 +2,6 @@ services:
     jm_billeterie.verifbillet:
         class: JM\BilleterieBundle\VerifBillet\JMVerifBillet
         arguments: [@doctrine.orm.entity_manager]
+    jm_billeterie.tarifbillet:
+        class: JM\BilleterieBundle\TarificationBillet\JMTarificationBillet
+        arguments: [@doctrine.orm.entity_manager]

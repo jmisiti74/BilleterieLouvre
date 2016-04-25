@@ -1,7 +1,3 @@
-jm_contact:
-    resource: "@JMContactBundle/Resources/config/routing.yml"
-    prefix:   /contact
-
 jm_billeterie:
     resource: "@JMBilleterieBundle/Resources/config/routing.yml"
     prefix:   /

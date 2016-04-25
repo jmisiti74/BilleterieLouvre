@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\RangeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class NbrBilletType extends AbstractType
 {
@@ -17,9 +18,12 @@ class NbrBilletType extends AbstractType
     {
         $builder
             ->add('nombre')
-            ->add('dateReservation', 'date', array(
-                'widget' => 'single_text'
+            ->add('nom')
+            ->add('dateReservation', DateType::class, array(
+                'widget' => 'choice',
+                'years' => range(16,21)
             ))
+            ->add('email', 'email')
             ->add('Suivant', 'submit')
         ;
     }

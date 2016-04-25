@@ -2,6 +2,7 @@
 
 namespace JM\BilleterieBundle\VerifBillet;
 use JM\BilleterieBundle\Entity\Billet;
+use JM\BilleterieBundle\Entity\JourInterdit;
 use JM\BilleterieBundle\Entity\billetDate;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\ORM\EntityManager;
@@ -23,7 +24,8 @@ class JMVerifBillet
         $billetDates = $repository->findBy(
             array('date' => $dateReservation)
         );
-        
+        $repository = $this->em->getRepository('JMBilleterieBundle:JourInterdit');
+        $joursInterdit = $repository->findAll();
         /* On vérifie que la réservation n'est pas pour hier ou + */
         if(!(date($dateReservation->format('Ymd')) >= date($dateNow->format('Ymd')))){
             $_SESSION["Error"] = 'Vous ne pouvez pas commander de billet pour un jour déjà passé.';
@@ -31,9 +33,13 @@ class JMVerifBillet
         }
         
         /* On vérifie que la réservation n'est pas pour les jours interdits */
-        if(($dateReservation->format('j n') === '1 5') || ($dateReservation->format('j n') === '1 11') || ($dateReservation->format('j n') === '25 12') || ($dateReservation->format('j n') === '1 1') || ($dateReservation->format('j n') === '28 3') || ($dateReservation->format('j n') === '1 5') || ($dateReservation->format('j n') === '8 5') || ($dateReservation->format('j n') === '5 5') || ($dateReservation->format('j n') === '16 5') || ($dateReservation->format('j n') === '14 7') || ($dateReservation->format('j n') === '15 8') || ($dateReservation->format('j n') === '1 11') || ($dateReservation->format('j n') === '11 11') || ($dateReservation->format('%w') === '%2') || ($dateReservation->format('%w') === '%0')){
-            $_SESSION["Error"] = 'Vous ne pouvez pas réserver de billet pour le ' . $dateReservation->format('d/m/Y ') . '. Cliquez sur "Plus d\'infos" pour voir les dates ou la réservation de billet est indisponnible.';
-            return false;
+        foreach ($joursInterdit as $jourInterdit){
+            $j = $jourInterdit->getJour();
+            if(($dateReservation->format('j n') === $j) || ($dateReservation->format('%w') === $j)){
+                $_SESSION["Error"] = $jourInterdit->getMessage();
+                return false;
+            }
+            
         }
         
         /* On vérifie si la réservation est pour le jour même && en journée, si oui on regarde si l'heure (14H) n'est pas passer */

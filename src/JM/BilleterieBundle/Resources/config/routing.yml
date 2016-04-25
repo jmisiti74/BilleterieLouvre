@@ -13,3 +13,11 @@ billeterie:
 billeterie_panier:
     path:   /Panier
     defaults: { _controller: JMBilleterieBundle:Ticket:panier }
+    
+billeterie_panier_vider:
+    path:   /Panier/clear{id}
+    defaults: { _controller: JMBilleterieBundle:Ticket:panierclear }
+    
+billeterie_infos:
+    path:   /infos
+    defaults: { _controller: JMBilleterieBundle:Ticket:infos }
