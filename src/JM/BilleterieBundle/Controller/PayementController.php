@@ -12,7 +12,82 @@ use JM\BilleterieBundle\Entity\billetDate;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 
 class PayementController extends Controller
-{    
+{
+    /* VVV POUR PAYPAL VVV */
+    public function paypalIpnAction()
+    {
+        // Adresse e-mail du vendeur
+        $email_vendeur = "test-vendeur@xjejevbx.fr";
+        // Envoi des infos a Paypal
+        $req = "cmd=_notify-validate";
+        foreach ($_POST as $key => $value) {
+            $value = urlencode(stripslashes($value));
+            $req.= "&$key=$value";
+        }
+        $fp = curl_init('https://www.sandbox.paypal.com/cgi-bin/webscr');
+        curl_setopt($fp, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        curl_setopt($fp, CURLOPT_POST, 1);
+        curl_setopt($fp, CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($fp, CURLOPT_POSTFIELDS, $req);
+        curl_setopt($fp, CURLOPT_SSL_VERIFYPEER, 1);
+        curl_setopt($fp, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($fp, CURLOPT_FORBID_REUSE, 1);
+        curl_setopt($fp, CURLOPT_HTTPHEADER, array('Connection: Close'));
+        if( !($res = curl_exec($fp)) ) {
+            curl_close($fp);
+            exit;
+        }
+        curl_close($fp);
+        // Le paiement est validé
+        if (strcmp(trim($res), "VERIFIED") == 0) {
+            // Vérifier que le statut du paiement est complet
+            if ($_POST['payment_status'] == "Completed") {
+                // Vérification de l'e-mail du vendeur
+                if ($email_vendeur == $_POST['receiver_email']) {
+                    // Récupération du montant VRAI du panier
+                    $repositoryPanier = $em->getRepository('JMBilleterieBundle:Panier');
+                    $panier = $repositoryPanier->find($_SESSION["Panier"]);
+                    $prixTotal = $panier->getPrixTotal();
+                    $repositoryBillet = $em->getRepository('JMBilleterieBundle:Billet');
+                    $listeBillets = $repositoryBillet->findBy(
+                        array('panier' => $panier)
+                    );
+                    // Vérification de la concordance du montant
+                    if ($_POST['mc_gross'] == $prixTotal) {
+                        // Requête pour la mise à jour du statut de la commande => Payer à VRAI
+                        foreach($listeBillets as $billet){
+                            $billet->setPayer(true);
+                            $em->persist($billet);
+                        }
+                        $em->flush();
+                        // Envoi du mail de récapitulatif de la commande à l'acheteur et au vendeur
+                    }
+                }   
+            }
+        }
+    }
+    public function paypalReturnAction(Request $request)
+    {   
+        $em = $this->getDoctrine()->getManager();
+        $repositoryPanier = $em->getRepository('JMBilleterieBundle:Panier');
+        $panier = $repositoryPanier->find($_SESSION["Panier"]);
+        $prixTotal = $panier->getPrixTotal();
+        $repositoryBillet = $em->getRepository('JMBilleterieBundle:Billet');
+        $listeBillets = $repositoryBillet->findBy(
+            array('panier' => $panier)
+        );
+        foreach($listeBillets as $billet){
+            $billet->setPayer(true);
+            $em->persist($billet);
+        }
+        $em->flush();
+        $session = $request->getSession();
+        $session->getFlashBag()->add('alert', "Payement fait !!! :D");
+        $url = $this->get('router')->generate('billeterie');
+        return new RedirectResponse($url);  
+    }
+    /* ^^^ POUR PAYPAL ^^^ */
+    
     /* VVV POUR STRIPE VVV */
     public function stripeAction()
     {   
