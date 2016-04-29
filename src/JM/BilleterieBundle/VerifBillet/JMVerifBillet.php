@@ -17,6 +17,7 @@ class JMVerifBillet
 	}
     public function isValidBillet(Billet $billet)
     {
+        /* verification de la validité du billet (ce fait a chaque création de nouveau billet) */
         $dateNow = new \DateTime;
         $dateReservation = $billet->getDateReservation();
         $demiJour = $billet->getDemiJour();
@@ -24,6 +25,7 @@ class JMVerifBillet
         $billetDates = $repository->findBy(
             array('date' => $dateReservation)
         );
+        $billetDatesPurge = $repository->findAll();
         $repository = $this->em->getRepository('JMBilleterieBundle:JourInterdit');
         $joursInterdit = $repository->findAll();
         /* On vérifie que la réservation n'est pas pour hier ou + */
@@ -35,7 +37,7 @@ class JMVerifBillet
         /* On vérifie que la réservation n'est pas pour les jours interdits */
         foreach ($joursInterdit as $jourInterdit){
             $j = $jourInterdit->getJour();
-            if(($dateReservation->format('j n') === $j) || ($dateReservation->format('%w') === $j)){
+            if(($dateReservation->format('j-n') === $j) || ($dateReservation->format('%w') === $j)){
                 $_SESSION["Error"] = $jourInterdit->getMessage();
                 return false;
             }
@@ -49,13 +51,20 @@ class JMVerifBillet
         }
         
         /* On vérifie que moins de 1000 billet ont été achetée */
-        foreach ($billetDates as $placePrises) {
+        foreach ($billetDates as $placePrises){
             $placePrise = $placePrises->getPlacePrise();
         }
         if(isset($placePrise)){
             if($placePrise >= 1000){
                 $_SESSION["Error"] = 'Il n\'y a plus de place pour le ' . $dateReservation->format('d/m/Y ') . '.';
                 return false;
+            }
+        }
+        /* Lancement de la purge de billets */
+        foreach($billetDatesPurge as $k=>$billetPurge){
+            $datePurge = $billetPurge->getDate();
+            if($datePurge < $dateNow){
+                $this->em->remove($billetDatesPurge[$k]);
             }
         }
         

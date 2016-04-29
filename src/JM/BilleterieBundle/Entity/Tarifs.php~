@@ -31,9 +31,9 @@ class Tarifs
     /**
      * @var string
      *
-     * @ORM\Column(name="circonstance", type="string", length=255)
+     * @ORM\Column(name="type", type="string", length=255)
      */
-    private $circonstance;
+    private $type;
 
 
     /**
@@ -69,28 +69,28 @@ class Tarifs
     {
         return $this->prix;
     }
-
+    
     /**
-     * Set circonstance
+     * Set type
      *
-     * @param string $circonstance
+     * @param string $type
      *
      * @return Tarifs
      */
-    public function setCirconstance($circonstance)
+    public function setType($type)
     {
-        $this->circonstance = $circonstance;
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * Get circonstance
+     * Get type
      *
      * @return string
      */
-    public function getCirconstance()
+    public function getType()
     {
-        return $this->circonstance;
+        return $this->type;
     }
 }

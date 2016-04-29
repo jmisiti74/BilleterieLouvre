@@ -53,9 +53,22 @@
                     <td><a href="{{ path('billeterie_panier_vider', {'id': billet.codeUnique  }) }}"><button class="btn btn-danger">Supprimer</button></a></td>
                             
                 </tr>
-            {% endfor %}   
+            {% endfor %} 
+                Prix total : {{ prixTotal }}€
         </tbody>
     </table>
     <br/>
-    <p>* F = Famille</p>
+    <h3>Achat</h3>
+    <hr>
+    <form action="{{ path('billeterie_pay_stripe') }}" method="POST">
+        <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="pk_test_kg4KAWyvEXWLneWmP3yx5EMB"
+            data-amount="{{ prixTotal }}00"
+            data-name="Stripe.com"
+            data-description="Widget"
+            data-image="/BilleterieLouvre/web/Ressources/img/stripe-payment-form.png"
+            data-locale="auto">
+          </script>
+    </form>
 {% endblock %}

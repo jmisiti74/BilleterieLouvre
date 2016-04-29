@@ -19,7 +19,7 @@ class Billet
         $this->dateNaissance = new \DateTime();
         $this->dateNaissance->modify('-26 years');
         $this->payer = false;
-        $this->prix = 100;
+        $this->prix = 125;
     }
     /**
      * @var int
@@ -469,7 +469,7 @@ class Billet
      */
     public function setPanier(\JM\BilleterieBundle\Entity\Panier $panier = null)
     {
-        $this->Panier = $panier;
+        $this->panier = $panier;
 
         return $this;
     }
@@ -481,6 +481,6 @@ class Billet
      */
     public function getPanier()
     {
-        return $this->Panier;
+        return $this->panier;
     }
 }

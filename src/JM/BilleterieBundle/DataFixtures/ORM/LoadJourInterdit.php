@@ -14,36 +14,36 @@ class LoadJourInterdit implements FixtureInterface
   {
     // Liste des noms de catégorie à ajouter
       $jours = array(
-          '1 5',
-          '1 11',
-          '25 12',
-          '1 1',
-          '28 3',
-          '1 5',
-          '8 5',
-          '5 5',
-          '16 5',
-          '15 8',
-          '1 11',
-          '11 11',
+          '1-5',
+          '1-11',
+          '25-12',
+          '1-1',
+          '28-3',
+          '1-5',
+          '8-5',
+          '5-5',
+          '16-5',
+          '15-8',
+          '1-11',
+          '11-11',
           '%2',
           '%0'
       );      
       $messages = array(
-          '1 5',
-          '1 11',
-          '25 12',
-          '1 1',
-          '28 3',
-          '1 5',
-          '8 5',
-          '5 5',
-          '16 5',
-          '15 8',
-          '1 11',
-          '11 11',
-          '%2',
-          '%0'      
+          'erthaerhaerh',
+          'aerhaerjaerjaerj',
+          'aerjaerjaerjaerjaerj',
+          'arejaerjaerjaerjae',
+          'rajaerjaerjaerj',
+          'aeryghaezrvaernhaer',
+          'erjuaertazegze',
+          'aezrygerfhzerhz',
+          '1grzehaezrhaerh5',
+          '15haerhaerhaerhaerh8',
+          '1aerhaerhaerhaerh11',
+          '11aerhaerhaerhaerh11',
+          'raehjreajraefgazergh',
+          'aerhaerhaerjaerabv'      
       );
       
       foreach (array_combine($jours, $messages) as $jour => $message) {

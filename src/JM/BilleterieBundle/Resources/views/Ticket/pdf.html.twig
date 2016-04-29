@@ -1,0 +1,66 @@
+<page>
+    <style type="text/css">
+        table{
+            width:100%;
+        }
+        div{
+            border: 4px solid;
+            height: 40%;
+        }
+    </style>
+    <page_header>
+        <div>
+            <table>
+                <tr>
+                    <td style="width:35%;"><img style="margin:auto;" src="http://localhost/BilleterieLouvre/web/Ressources/img/LogoLouvre.png" alt="LogoLouvre" href="" /></td>
+                    <td><h2>Votre billet pour le Musée du Louvre </h2></td>
+                </tr>
+            </table>
+            <br>
+            <table>
+                <tr>
+                    <td style="width:35%;"><qrcode value="{{ codeUnique }}" ec="H" style="width: 50mm; border: none; background-color: white; color: #967c5c;"></qrcode></td>
+                    <td>
+                        Nom : {{ nom }}<hr>
+                        Prénom : {{ prenom }}<hr>
+                        Date de réservation : {{ dateReservation|date('j/m/Y') }}<hr>
+                        Date de naissance : {{ dateNaissance|date('j/m/Y') }}<hr>
+                        Prix : {% if prix == 0 %}Gratuit{% elseif prix == 99 %}Tarif Famille{% else %}{{ prix }} €{% endif %}<hr>
+                        Option Tarif réduit : {% if tarifReduit == true %}oui{% else %}non{% endif %}<hr>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div>
+            <table>
+                <tr>
+                    <td><h3>Informations supplémentaires</h3></td>
+                </tr>
+                <br>
+                <tr>
+                    <td> - Si vous disposez d'un Tarif réduit venez avec un justificatif; Si vous disposez d'un Tarif famille, venez tous avec une carte d'identitée.</td>
+                </tr>
+                <tr>
+                    <td> - Inutile d'imprimer les billets des enfants de moins de 4 ans. Il suffit d'apporter une pièce d'identité ou un document officiel attestant l'âge de votre enfant.</td>
+                </tr>
+            </table>
+            <br>
+            <br>
+            <br>
+            <br>
+            <table>
+                <tr>
+                    <td><img style="width:125px;" src="http://localhost/BilleterieLouvre/web/Ressources/img/InterditChien.jpg" alt="Chien interdit" href="" /></td>
+                    <td><img style="width:125px;" src="http://localhost/BilleterieLouvre/web/Ressources/img/InterditPhoto.jpg" alt="Interdit de prendre des photos" href="" /></td>
+                    <td><img style="width:125px;" src="http://localhost/BilleterieLouvre/web/Ressources/img/InterditFumer.png" alt="Interdi de fumer" href="" /></td>
+                </tr>
+            </table>
+        </div>
+        
+    </page_header> 
+    
+    <page_footer>
+        <p style="text-align:center;">Musée du Louvre © {{ 'now'|date('j/m/Y') }}.</p>
+    </page_footer>
+</page>

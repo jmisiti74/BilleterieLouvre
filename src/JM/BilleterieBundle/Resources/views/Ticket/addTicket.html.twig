@@ -16,17 +16,17 @@
       {{ form_errors(form.tarifReduit) }}
 
       <div class="col-md-4">
-        {{ form_widget(form.tarifReduit) }}
+        {{ form_widget(form.tarifReduit, {'attr': {'title': "Attention, le tarif réduit est accordé sous certaines condition. Plus d'infos dans l'onglet 'Plus d'infos'"}}) }}
       </div>
     </div>
     <!-- Champs Date de Naissance -->
     <div class="form-group">
       {{ form_label(form.dateNaissance, "Date de naissance : ", {'label_attr': {'class': 'col-md-2 control-label'}}) }}
-
+            
       {{ form_errors(form.dateNaissance) }}
 
       <div class="col-md-4">
-        {{ form_widget(form.dateNaissance) }}
+        {{ form_widget(form.dateNaissance, {'attr': {'title': "Indiquez votre date de naissance. Elle déterminera le tarif de votre billet. (Justificatif nécessaire a l'entrée)"}}) }}
       </div>
     </div>
     <!-- Champs De Prénom -->
@@ -36,7 +36,7 @@
       {{ form_errors(form.prenom) }}
 
       <div class="col-md-4">
-        {{ form_widget(form.prenom) }}
+        {{ form_widget(form.prenom, {'attr': {'title': "Indiquez votre prénom"}}) }}
       </div>
     </div>
     <!-- Champs De Pays -->
@@ -46,7 +46,7 @@
       {{ form_errors(form.pays) }}
 
       <div class="col-md-4">
-        {{ form_widget(form.pays) }}
+        {{ form_widget(form.pays, {'attr': {'title': "Indiquez votre Pays"}}) }}
       </div>
     </div>
   {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}

@@ -11,46 +11,46 @@
         <!-- Nombre de Billets -->
         <div class="form-group">
           {# Génération du label. #}
-          {{ form_label(form.nombre, "Combien de billet voulez-vous : ", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+          {{ form_label(form.nombre, "Combien de billet voulez-vous : ", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
 
           {{ form_errors(form.nombre) }}
 
-          <div class="col-md-4">
-            {{ form_widget(form.nombre) }}
+          <div class="col-md-2">
+            {{ form_widget(form.nombre, {'attr': {'title': 'Choisisez combien de billets vous voulez (Entre 1 et 30).'}}) }}
           </div>
         </div>
             
         <!-- Champs De eMail -->
         <div class="form-group">
-          {{ form_label(form.email, "A quel E-mail envoyons nous vos billets : ", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+          {{ form_label(form.email, "E-mail : ", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
 
           {{ form_errors(form.email) }}
 
-          <div class="col-sm-4">
-            {{ form_widget(form.email) }}
+          <div class="col-md-2">
+            {{ form_widget(form.email, {'attr': {'title': "Indiquez l'email (Nous enverons vos billets à cette adresse)."}}) }}
           </div>
         </div>
             
         <!-- Champs De Nom de famille -->
         <div class="form-group">
-          {{ form_label(form.nom, "Quel est le nom de famille des personnes qui se rendrons au musée : ", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+          {{ form_label(form.nom, "Nom de famille : ", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
 
           {{ form_errors(form.nom) }}
 
-          <div class="col-sm-4">
-            {{ form_widget(form.nom) }}
+          <div class="col-md-2">
+            {{ form_widget(form.nom, {'attr': {'title': "Ce nom de famille sera lié a tous les billets crées (Vous pouvez répeter l'étape)."}}) }}
           </div>
         </div>
 
         <!-- Date de reservation -->
         <div class="form-group">
           {# Génération du label. #}
-          {{ form_label(form.dateReservation, "Pour quand voulez-vous réserver : ", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+          {{ form_label(form.dateReservation, "Pour quand voulez-vous réserver : ", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
 
           {{ form_errors(form.dateReservation) }}
 
-          <div class="col-md-4">
-            {{ form_widget(form.dateReservation) }}
+          <div class="col-md-2">
+            {{ form_widget(form.dateReservation, {'attr': {'title': 'Indiquez votre date de réservation'}}) }}
           </div>
         </div>
 

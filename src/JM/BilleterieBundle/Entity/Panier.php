@@ -28,6 +28,13 @@ class Panier
      */
     private $date;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="prixTotal", type="integer")
+     */
+    private $prixTotal;
+
 
     /**
      * Get id
@@ -67,7 +74,31 @@ class Panier
      */
     public function __construct()
     {
-        $this->billet = new \Doctrine\Common\Collections\ArrayCollection();
         $this->date = new \DateTime();
+        $this->prixTotal = 0;
+    }
+
+    /**
+     * Set prixTotal
+     *
+     * @param integer $prixTotal
+     *
+     * @return Panier
+     */
+    public function setPrixTotal($prixTotal)
+    {
+        $this->prixTotal = $prixTotal;
+
+        return $this;
+    }
+
+    /**
+     * Get prixTotal
+     *
+     * @return integer
+     */
+    public function getPrixTotal()
+    {
+        return $this->prixTotal;
     }
 }

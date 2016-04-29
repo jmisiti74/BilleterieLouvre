@@ -21,3 +21,19 @@ billeterie_panier_vider:
 billeterie_infos:
     path:   /infos
     defaults: { _controller: JMBilleterieBundle:Ticket:infos }
+    
+billeterie_pay_stripe:
+    path:   /payement/stripe
+    defaults: { _controller: JMBilleterieBundle:Payement:stripe }
+    
+billeterie_pay_paypal_ipn:
+    path:   /payement/paypal/ipn
+    defaults: { _controller: JMBilleterieBundle:Payement:paypalIpn }
+
+billeterie_pay_paypal_return:
+    path:   /payement/paypal/return
+    defaults: { _controller: JMBilleterieBundle:Payement:paypalReturn }
+
+billeterie_pdf:
+    path:   /pdf
+    defaults: { _controller: JMBilleterieBundle:Pdf:pdf }
