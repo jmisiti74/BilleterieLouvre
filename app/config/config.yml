@@ -7,9 +7,6 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    paypal_username: testseller74_api2.gmail.com
-    paypal_password: CCKQZGDJS99PGY3H
-    paypal_signature: AWRMor4gtjCCJSW-d1nI-THyi5M8ADWQmHtuwYt-HE5Tm6tPRIkwm481
 
 framework:
     #esi:             ~
