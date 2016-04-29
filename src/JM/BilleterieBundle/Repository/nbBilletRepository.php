@@ -11,3 +11,5 @@ namespace JM\BilleterieBundle\Repository;
 class NbBilletRepository extends \Doctrine\ORM\EntityRepository
 {
 }
+
+?>

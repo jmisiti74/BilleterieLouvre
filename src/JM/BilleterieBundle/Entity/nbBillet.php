@@ -160,4 +160,5 @@ class NbBillet
         return $this->nom;
     }
 }
+
 ?>

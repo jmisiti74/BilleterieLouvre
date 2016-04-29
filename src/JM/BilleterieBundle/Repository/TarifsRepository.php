@@ -11,3 +11,5 @@ namespace JM\BilleterieBundle\Repository;
 class TarifsRepository extends \Doctrine\ORM\EntityRepository
 {
 }
+
+?>

@@ -11,3 +11,5 @@ namespace JM\BilleterieBundle\Repository;
 class PanierRepository extends \Doctrine\ORM\EntityRepository
 {
 }
+
+?>

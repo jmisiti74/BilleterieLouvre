@@ -11,3 +11,5 @@ namespace JM\BilleterieBundle\Repository;
 class BilletDateRepository extends \Doctrine\ORM\EntityRepository
 {
 }
+
+?>

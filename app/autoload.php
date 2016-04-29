@@ -16,3 +16,5 @@ $loader->register();
 
 
 return $loader;
+
+?>

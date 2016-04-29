@@ -70,4 +70,5 @@ class JMVerifBillet
         return true;
     }
 }
+
 ?>

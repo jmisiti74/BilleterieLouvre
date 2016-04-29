@@ -94,4 +94,5 @@ class Tarifs
         return $this->type;
     }
 }
+
 ?>

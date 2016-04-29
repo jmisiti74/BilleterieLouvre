@@ -11,3 +11,5 @@ namespace JM\BilleterieBundle\Repository;
 class OrderRepository extends \Doctrine\ORM\EntityRepository
 {
 }
+
+?>

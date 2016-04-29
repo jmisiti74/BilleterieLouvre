@@ -2,7 +2,6 @@
 
 namespace JM\BilleterieBundle\TarificationBillet;
 use Doctrine\ORM\EntityManager;
-use JM\BilleterieBundle\Entity\Tarifs;
 
 class JMTarificationBillet
 {
@@ -90,4 +89,5 @@ class JMTarificationBillet
         return true;
     }
 }
+
 ?>

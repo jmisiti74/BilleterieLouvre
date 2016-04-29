@@ -2,14 +2,9 @@
 namespace JM\BilleterieBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\RequestContext;
 use JM\BilleterieBundle\Entity\billetDate;
-use Symfony\Component\Routing\Generator\UrlGenerator;
 
 class PayementController extends Controller
 {
@@ -36,7 +31,6 @@ class PayementController extends Controller
         curl_setopt($fp, CURLOPT_HTTPHEADER, array('Connection: Close'));
         if( !($res = curl_exec($fp)) ) {
             curl_close($fp);
-            exit;
         }
         curl_close($fp);
         // Le paiement est validé
@@ -110,14 +104,12 @@ class PayementController extends Controller
                      array('date' => $dateReservation)
                 );                
 
-                /* V-V-V CETTE PARTIE DOIT ÊTRE DEPLACER VERS LA ZONE DE PAYEMENT V-V-V */
                 /* SI il n'éxiste pas de ligne pour la date du billet, on en crée une et on ajoute 1 place prise */
                 if(!isset($billetDates[0])){
                     $billetDate = new billetDate();
                     $billetDate->setDate($dateReservation);
                     $billetDate->addPlacePrise();
                     $em->persist($billetDate);
-                    $em->flush();
                 } else {
                     /* SI il éxiste déjà une ligne pour cette date, on ajoute juste une place prise */
                     foreach ($billetDates as $billetDate) {
@@ -138,4 +130,5 @@ class PayementController extends Controller
     }
     /* ^^^ POUR STRIPE ^^^ */
 }
+
 ?>

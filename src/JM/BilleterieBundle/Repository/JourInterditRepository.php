@@ -11,3 +11,5 @@ namespace JM\BilleterieBundle\Repository;
 class JourInterditRepository extends \Doctrine\ORM\EntityRepository
 {
 }
+
+?>
