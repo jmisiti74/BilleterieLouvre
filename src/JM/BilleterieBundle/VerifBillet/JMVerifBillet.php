@@ -2,10 +2,8 @@
 
 namespace JM\BilleterieBundle\VerifBillet;
 use JM\BilleterieBundle\Entity\Billet;
-use JM\BilleterieBundle\Entity\JourInterdit;
-use JM\BilleterieBundle\Entity\billetDate;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\Request;
 
 class JMVerifBillet
 {
@@ -15,13 +13,14 @@ class JMVerifBillet
 	{
 		$this->em = $manager;
 	}
-    public function isValidBillet(Billet $billet)
+    public function isValidBillet(Billet $billet, Request $request)
     {
+        $session = $request->getSession();
         /* verification de la validité du billet (ce fait a chaque création de nouveau billet) */
         $dateNow = new \DateTime;
         $dateReservation = $billet->getDateReservation();
         $demiJour = $billet->getDemiJour();
-        $repository = $this->em->getRepository('JMBilleterieBundle:billetDate');
+        $repository = $this->em->getRepository('JMBilleterieBundle:BilletDate');
         $billetDates = $repository->findBy(
             array('date' => $dateReservation)
         );
@@ -30,7 +29,7 @@ class JMVerifBillet
         $joursInterdit = $repository->findAll();
         /* On vérifie que la réservation n'est pas pour hier ou + */
         if(!(date($dateReservation->format('Ymd')) >= date($dateNow->format('Ymd')))){
-            $_SESSION["Error"] = 'Vous ne pouvez pas commander de billet pour un jour déjà passé.';
+            $session->set('error', 'Vous ne pouvez pas commander de billet pour un jour déjà passé.');
             return false;
         }
         
@@ -38,7 +37,7 @@ class JMVerifBillet
         foreach ($joursInterdit as $jourInterdit){
             $j = $jourInterdit->getJour();
             if(($dateReservation->format('j-n') === $j) || ($dateReservation->format('%w') === $j)){
-                $_SESSION["Error"] = $jourInterdit->getMessage();
+                $session->set('error', $jourInterdit->getMessage());
                 return false;
             }
             
@@ -46,7 +45,7 @@ class JMVerifBillet
         
         /* On vérifie si la réservation est pour le jour même && en journée, si oui on regarde si l'heure (14H) n'est pas passer */
         if(($demiJour === false) && (date($dateReservation->format('m/y/d')) == date($dateNow->format('m/y/d'))) && (date($dateNow->format('H')) >= '14' )){
-            $_SESSION["Error"] = 'Vous ne pouvez pas commander de billet "Journée" pour le jour même à partir de 14H.';
+            $session->set('error', 'Vous ne pouvez pas commander de billet "Journée" pour le jour même à partir de 14H.');
             return false;
         }
         
@@ -56,7 +55,7 @@ class JMVerifBillet
         }
         if(isset($placePrise)){
             if($placePrise >= 1000){
-                $_SESSION["Error"] = 'Il n\'y a plus de place pour le ' . $dateReservation->format('d/m/Y ') . '.';
+                $session->set('error', 'Il n\'y a plus de place pour le ' . $dateReservation->format('d/m/Y ') . '.');
                 return false;
             }
         }
@@ -71,3 +70,4 @@ class JMVerifBillet
         return true;
     }
 }
+?>

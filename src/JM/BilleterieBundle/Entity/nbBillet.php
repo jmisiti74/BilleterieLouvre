@@ -5,12 +5,12 @@ namespace JM\BilleterieBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * nbBillet
+ * NbBillet
  *
  * @ORM\Table(name="nb_billet")
- * @ORM\Entity(repositoryClass="JM\BilleterieBundle\Repository\nbBilletRepository")
+ * @ORM\Entity(repositoryClass="JM\BilleterieBundle\Repository\NbBilletRepository")
  */
-class nbBillet
+class NbBillet
 {   
     public function __construct()
     {
@@ -160,3 +160,4 @@ class nbBillet
         return $this->nom;
     }
 }
+?>

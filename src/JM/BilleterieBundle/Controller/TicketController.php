@@ -2,13 +2,11 @@
 namespace JM\BilleterieBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use JM\BilleterieBundle\Entity\Billet;
 use JM\BilleterieBundle\Entity\Panier;
-use JM\BilleterieBundle\Entity\nbBillet;
+use JM\BilleterieBundle\Entity\NbBillet;
 use JM\BilleterieBundle\Form\BilletType;
 use JM\BilleterieBundle\Form\NbrBilletType;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -20,16 +18,16 @@ class TicketController extends Controller
     }
     public function infosAction()
     {
-        unset($_SESSION["Panier"]);
         return $this->render('JMBilleterieBundle:Ticket:infos.html.twig');
     }
     public function panierAction(Request $request)
     {   
-        if(isset($_SESSION["Panier"])){
+        $session = $request->getSession();
+        if($session->has('Panier')){
             $em = $this->getDoctrine()->getManager();
             $repositoryPanier = $em->getRepository('JMBilleterieBundle:Panier');
             $repositoryBillet = $em->getRepository('JMBilleterieBundle:Billet');
-            $panier = $repositoryPanier->find($_SESSION["Panier"]);
+            $panier = $repositoryPanier->find($session->get('Panier'));
             $prixTotal = 0;
             $famille = 0;
             if(isset($panier)){
@@ -56,7 +54,6 @@ class TicketController extends Controller
                 $em->persist($panier);
                 $em->flush();
                 if(empty($listeBillets)){
-                    $session = $request->getSession();
                     $session->getFlashBag()->add('alert', "Le panier est vide !");
                     $url = $this->get('router')->generate('billeterie');
                     return new RedirectResponse($url);
@@ -64,7 +61,7 @@ class TicketController extends Controller
                 return $this->render('JMBilleterieBundle:Ticket:panier.html.twig', array(
                     'panier' => $listeBillets,
                     'prixTotal' => $panier->getPrixTotal(),
-                    'panierId' => $_SESSION["Panier"],
+                    'panierId' => $session->get('Panier'),
                 ));
             }
         }
@@ -76,10 +73,11 @@ class TicketController extends Controller
     
     public function panierclearAction($id, Request $request)
     {
+        $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
         $repositoryPanier = $em->getRepository('JMBilleterieBundle:Panier');
         $repositoryBillet = $em->getRepository('JMBilleterieBundle:Billet');
-        $panier = $repositoryPanier->find($_SESSION["Panier"]);
+        $panier = $repositoryPanier->find($session->get('Panier'));
         $listeBillets = $repositoryBillet->findBy(
                     array('panier' => $panier)
                 );
@@ -112,24 +110,29 @@ class TicketController extends Controller
     
     public function addTicketE1Action($demiJour, Request $request)
     {
+        $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
-        if(!isset($_SESSION["Panier"]) || empty($_SESSION["Panier"])){
+        if(!$session->has('Panier')){
             $panier = new Panier();
             $em->persist($panier);
             $em->flush();
-            $_SESSION["Panier"] = $panier->getId();
+            $session->set('Panier', $panier->getId());
+        } else if(empty($session->get('Panier'))){
+            $panier = new Panier();
+            $em->persist($panier);
+            $em->flush();
+            $session->set('Panier', $panier->getId());            
         }
-        $nbBillet = new nbBillet();
+        $nbBillet = new NbBillet();
         $form = $this->get('form.factory')->create(new NbrBilletType(), $nbBillet);
         if($form->handleRequest($request)->isValid()) {
-            $nombreDeBillet = $nbBillet->getNombre();
-            $_SESSION["dateReservation"] = $nbBillet->getDateReservation();
-            $_SESSION["email"] = $nbBillet->getEmail();
-            $_SESSION["nom"] = $nbBillet->getNom();
+            $session->set('dateReservation', $nbBillet->getDateReservation());
+            $session->set('email', $nbBillet->getEmail());
+            $session->set('nom', $nbBillet->getNom());
             $url = $this->get('router')->generate(
                 'billeterie_ticketadde2',
                 array('demiJour' => $demiJour,
-                      'nbBillet' => $nombreDeBillet
+                      'nbBillet' => $nbBillet->getNombre(),
                      )
             );
             return new RedirectResponse($url);
@@ -142,13 +145,14 @@ class TicketController extends Controller
     
     public function addTicketE2Action($demiJour, $nbBillet, Request $request)
     {   
+        $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
-            /* Chargement du service de tarification de billet */   
+        /* Chargement du service de tarification de billet */   
         $tarificateurDeBillet = $this->get('jm_billeterie.tarifbillet');
         $repositoryPanier = $em->getRepository('JMBilleterieBundle:Panier');
         $repositoryBillet = $em->getRepository('JMBilleterieBundle:Billet');
-        $panier = $repositoryPanier->find($_SESSION["Panier"]);
-        if(!isset($_SESSION["dateReservation"]) || !isset($_SESSION["email"])){
+        $panier = $repositoryPanier->find($session->get('Panier'));
+        if(!$session->has('dateReservation') || !$session->has('email')){
             $request->getSession()->getFlashBag()->add('alert', 'La date de réservation ou l\'e-mail n\'est pas valide.');
             return $this->redirect($this->generateUrl('billeterie'));
         }
@@ -175,9 +179,9 @@ class TicketController extends Controller
         } else {
             /* Création d'un nouveau billet et chargement des properties */
             $billet = new Billet();
-            $billet->setDateReservation($_SESSION["dateReservation"]);
-            $billet->setEmail($_SESSION["email"]);
-            $billet->setNom($_SESSION["nom"]);
+            $billet->setDateReservation($session->get('dateReservation'));
+            $billet->setEmail($session->get('email'));
+            $billet->setNom($session->get('nom'));
             $billet->setPanier($panier);
             /* Chargement du formulaire de création de billet */
             $form = $this->get('form.factory')->create(new BilletType(), $billet);
@@ -196,13 +200,13 @@ class TicketController extends Controller
                 }
 
                 /* On vérifie que le billet est correct vià le service de vérification */
-                if($verificateurDeBillet->isValidBillet($billet)){
+                if($verificateurDeBillet->isValidBillet($billet, $request)){
                     
                     /* Ajout d'un flashbag de confirmation de création du billet */
                     $request->getSession()->getFlashBag()->add('alert', 'Billet enregistrer avec succès dans le panier');
                 } else {
                     /* Si le billet n'est pas valider on affiche un méssage d'érreur */
-                    $request->getSession()->getFlashBag()->add('alert', $_SESSION["Error"]);
+                    $request->getSession()->getFlashBag()->add('alert', $session->get('error'));
                     return $this->redirect($this->generateUrl('billeterie'));                    
                 }
                 $em->persist($billet);
@@ -224,3 +228,4 @@ class TicketController extends Controller
         ));
     }
 }
+?>

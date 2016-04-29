@@ -9,20 +9,21 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class PdfController extends Controller
 {
-    public function pdfAction()    
+    public function pdfAction(Request $request)    
     {   
+        $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('JMBilleterieBundle:billetDate');
         $repositoryPanier = $em->getRepository('JMBilleterieBundle:Panier');
         $repositoryBillet = $em->getRepository('JMBilleterieBundle:Billet');
-        $panier = $repositoryPanier->find($_SESSION["Panier"]);
+        $panier = $repositoryPanier->find($session->get('Panier'));
         $listeBillets = $repositoryBillet->findBy(
             array('panier' => $panier)
         );
         $html2pdf = new \Html2Pdf_Html2Pdf('L','A4','fr');
         $html2pdf->pdf->SetSubject('Billet Musée du Louvre');
         $html2pdf->pdf->SetAuthor('Musée du Louvre ©');
-            $html2pdf->pdf->SetTitle('Billet_Musée_Louvre');
+        $html2pdf->pdf->SetTitle('Billet_Musée_Louvre');
         foreach ($listeBillets as $billet){
             $content = $this->renderView('JMBilleterieBundle:Ticket:pdf.html.twig', array(
                 'nom' => $billet->getNom(),
@@ -39,3 +40,4 @@ class PdfController extends Controller
         return $response;      
     }
 }
+?>

@@ -5,12 +5,12 @@ namespace JM\BilleterieBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * billetDate
+ * BilletDate
  *
  * @ORM\Table(name="billet_date")
- * @ORM\Entity(repositoryClass="JM\BilleterieBundle\Repository\billetDateRepository")
+ * @ORM\Entity(repositoryClass="JM\BilleterieBundle\Repository\BilletDateRepository")
  */
-class billetDate
+class BilletDate
 {
     /**
      * @var int
@@ -106,3 +106,4 @@ class billetDate
         return $this;
     }
 }
+?>

@@ -14,8 +14,9 @@ use Symfony\Component\Routing\Generator\UrlGenerator;
 class PayementController extends Controller
 {
     /* VVV POUR PAYPAL VVV */
-    public function paypalIpnAction()
+    public function paypalIpnAction(Request $request)
     {
+        $session = $request->getSession();
         // Adresse e-mail du vendeur
         $email_vendeur = "test-vendeur@xjejevbx.fr";
         // Envoi des infos a Paypal
@@ -46,7 +47,7 @@ class PayementController extends Controller
                 if ($email_vendeur == $_POST['receiver_email']) {
                     // Récupération du montant VRAI du panier
                     $repositoryPanier = $em->getRepository('JMBilleterieBundle:Panier');
-                    $panier = $repositoryPanier->find($_SESSION["Panier"]);
+                    $panier = $repositoryPanier->find($session->get('Panier'));
                     $prixTotal = $panier->getPrixTotal();
                     $repositoryBillet = $em->getRepository('JMBilleterieBundle:Billet');
                     $listeBillets = $repositoryBillet->findBy(
@@ -67,22 +68,9 @@ class PayementController extends Controller
         }
     }
     public function paypalReturnAction(Request $request)
-    {   
-        $em = $this->getDoctrine()->getManager();
-        $repositoryPanier = $em->getRepository('JMBilleterieBundle:Panier');
-        $panier = $repositoryPanier->find($_SESSION["Panier"]);
-        $prixTotal = $panier->getPrixTotal();
-        $repositoryBillet = $em->getRepository('JMBilleterieBundle:Billet');
-        $listeBillets = $repositoryBillet->findBy(
-            array('panier' => $panier)
-        );
-        foreach($listeBillets as $billet){
-            $billet->setPayer(true);
-            $em->persist($billet);
-        }
-        $em->flush();
+    {
         $session = $request->getSession();
-        $session->getFlashBag()->add('alert', "Payement fait !!! :D");
+        $session->getFlashBag()->add('alert', "Payement effactué !!! :D");
         $url = $this->get('router')->generate('billeterie');
         return new RedirectResponse($url);  
     }
@@ -95,7 +83,7 @@ class PayementController extends Controller
         $repository = $em->getRepository('JMBilleterieBundle:billetDate');
         $repositoryPanier = $em->getRepository('JMBilleterieBundle:Panier');
         $repositoryBillet = $em->getRepository('JMBilleterieBundle:Billet');
-        $panier = $repositoryPanier->find($_SESSION["Panier"]);
+        $panier = $repositoryPanier->find($session->get('Panier'));
         $listeBillets = $repositoryBillet->findBy(
             array('panier' => $panier)
         );
@@ -150,3 +138,4 @@ class PayementController extends Controller
     }
     /* ^^^ POUR STRIPE ^^^ */
 }
+?>
