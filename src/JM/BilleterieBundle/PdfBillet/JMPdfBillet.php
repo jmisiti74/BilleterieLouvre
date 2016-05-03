@@ -39,7 +39,7 @@ class JMPdfBillet
 			->setSubject('Billet Musée du Louvre')
 			->setFrom(array('museelouvre@mdl.fr' => 'Musée du louvre'))
 			->setBody('')
-			->addPart('Bonjour, voilà vos billets pour le musée du louvre. N\'oubliez pas de venire avec vos justificatifs !')
+			->addPart('Bonjour, voilà vos billets pour le musée du Louvre. N\'oubliez pas de venir avec vos justificatifs !')
 		;
         foreach ($listeBillets as $billet){
 			if($billet->getPayer()){
