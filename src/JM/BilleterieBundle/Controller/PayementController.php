@@ -53,6 +53,12 @@ class PayementController extends Controller
 		}
     }
     /* ^^^ POUR STRIPE ^^^ */
+	
+	/* Une fois que le payement et les pdf ont été envoyés */
+	public function doneAction()
+	{
+        return $this->render('JMBilleterieBundle:Ticket:done.html.twig');
+	}
 }
 
 ?>

@@ -41,3 +41,7 @@ billeterie_pay_paypal_cancel:
 billeterie_pdf:
     path:   /pdf
     defaults: { _controller: JMBilleterieBundle:Pdf:pdf }
+
+billeterie_after_payement:
+    path:   /payement/done
+    defaults: { _controller: JMBilleterieBundle:Payement:done }
