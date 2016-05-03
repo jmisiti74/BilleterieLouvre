@@ -156,7 +156,7 @@ class TicketController extends Controller
         $repositoryBillet = $em->getRepository('JMBilleterieBundle:Billet');
         $panier = $repositoryPanier->find($session->get('Panier'));
         if(!$session->has('dateReservation') || !$session->has('email')){
-            $request->getSession()->getFlashBag()->add('alert', 'La date de réservation ou l\'e-mail n\'est pas valide.');
+            $request->getSession()->getFlashBag()->add('alert', 'La date de réservation ou l\'e-mail est invalide.');
             return $this->redirect($this->generateUrl('billeterie'));
         }
         if($nbBillet <= 0) {         
@@ -164,15 +164,14 @@ class TicketController extends Controller
                 array('panier' => $panier)
             );
             if(empty($listeBillets)){
-                $request->getSession()->getFlashBag()->add('alert', 'Liste de billets vide...');
+                $request->getSession()->getFlashBag()->add('alert', 'Liste de billet vide...');
                 return $this->redirect($this->generateUrl('billeterie'));
             }
             if($tarificateurDeBillet->setPrixBillets($listeBillets)){
-                $request->getSession()->getFlashBag()->set('alert', 'Tous les billets pour la famille ' . $session->get('nom') . ' ont été valider.');
+                $request->getSession()->getFlashBag()->set('alert', 'Tous les billets pour la famille ' . $session->get('nom') . ' ont été validés.');
                 return $this->redirect($this->generateUrl('billeterie'));
             }
             $session = $request->getSession();
-            $session->getFlashBag()->add('alert', "STOP!!");
             $url = $this->get('router')->generate('billeterie');
             return new RedirectResponse($url);
             
@@ -205,7 +204,7 @@ class TicketController extends Controller
                 if($verificateurDeBillet->isValidBillet($billet, $request)){
                     /* Ajout d'un flashbag de confirmation de création du billet */
 					$nbBillet -= 1;
-                    $request->getSession()->getFlashBag()->add('alert', 'Billet enregistrer avec succès dans le panier il vous en reste ' . $nbBillet . ' à faire.');
+                    $request->getSession()->getFlashBag()->add('alert', 'Billet enregistré avec succès dans le panier il vous en reste ' . $nbBillet . ' à faire.');
                 } else {
                     /* Si le billet n'est pas valider on affiche un méssage d'érreur */
                     $request->getSession()->getFlashBag()->add('alert', $session->get('error'));

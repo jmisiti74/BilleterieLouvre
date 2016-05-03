@@ -13,7 +13,7 @@ class PdfController extends Controller
 		$payementBillet = $this->get('jm_billeterie.pdfbillet');
         $html2pdf = new \Html2Pdf_Html2Pdf('L','A4','fr');
 		if($payementBillet->pdfSendMail($request, $html2pdf)){
-            $session->getFlashBag()->add('alert', "Vos billets vous ont été envoyé à l'adresse mail : " . $payementBillet->pdfWhoMail($request) . ".");
+            $session->getFlashBag()->add('alert', "Vos billets vous ont été envoyés à l'adresse mail : " . $payementBillet->pdfWhoMail($request) . ".");
 			$url = $this->get('router')->generate('billeterie_after_payement');
 			return new RedirectResponse($url);
 		}

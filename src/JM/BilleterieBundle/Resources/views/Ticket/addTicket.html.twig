@@ -17,8 +17,19 @@
 
       <div class="col-md-4">
         {{ form_widget(form.tarifReduit, {'attr': {'title': "Attention, le tarif réduit est accordé sous certaines condition. Plus d'infos dans l'onglet 'Plus d'infos'"}}) }}
+		<span id="openTaReduit" class="glyphicon glyphicon-chevron-down"></span>
+		<span id="closeTaReduit" class="glyphicon glyphicon-chevron-up"></span>
+		<br/>
+		<div id="helpTaReduit" class="alert alert-success">
+			<ul>
+				<li>Etudiant</li>
+				<li>Employé de musée</li>
+				<li>Service du ministère de la Culture</li>
+				<li>Militaire</li>
+			</ul>
+		</div>
       </div>
-    </div>
+	</div>
     <!-- Champs Date de Naissance -->
     <div class="form-group">
       {{ form_label(form.dateNaissance, "Date de naissance : ", {'label_attr': {'class': 'col-md-2 control-label'}}) }}
