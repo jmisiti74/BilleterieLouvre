@@ -2,10 +2,12 @@
 /app/bootstrap.php.cache
 /app/cache/*
 /app/config/parameters.yml
+/app/config/parameters.yml.dist
 /app/logs/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep
 /app/phpunit.xml
 /build/
+/web/billets.pdf
 /vendor/
 /bin/
