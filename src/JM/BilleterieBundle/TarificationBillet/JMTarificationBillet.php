@@ -11,7 +11,9 @@ class JMTarificationBillet
 	{
 		$this->em = $manager;
 	}
-    function setPrixBillet($listeBillets)
+	
+	/* Verificateur de billets */
+    function setPrixBillets($listeBillets)
     {
         /* Définition des variables utiles */
         $nbEnfant = 0;
@@ -27,29 +29,35 @@ class JMTarificationBillet
         }
         /* Pour chaque billets (avec le même nom de famille) le tri est fait en amont */
         foreach($listeBillets as $billet){
-            /* On verifie s'il a un tarif reduit */
-            $billetTarifReduit = $billet->getTarifReduit();
-            /* Recuperation de l'âge */
-            $age = $billet->getAge();
-            /* Definition des prix en fonction de l'âge */
-            if($age >= 60){
-                $billet->setPrix(senior);
-            } else if($age < 60 && $age >= 12){
-                $billet->setPrix(normal);
-            } else if($billetTarifReduit){
-                $billet->setPrix(tarifReduit);                
-            } else if($age < 12 && $age >= 4){
-                $billet->setPrix(enfant);
-            } else if($age < 4){
-                $billet->setPrix(bebe);
-            }
-            
-            /* Vérification du nombre d'adulte et du nombre d'enfant */
-            if($age >= 4 && $age < 18){
-                $nbEnfant++;
-            } else if($age >= 18){
-                $nbAdulte++;
-            }
+			if(!$billet->getPayer()){
+				/* On verifie s'il a un tarif reduit */
+				$billetTarifReduit = $billet->getTarifReduit();
+				/* Recuperation de l'âge */
+				$age = $billet->getAge();
+				/* Definition des prix en fonction de l'âge */
+				if($age >= 60){
+					$billet->setPrix(senior);
+				} else if($age < 60 && $age >= 12){
+					$billet->setPrix(normal);
+				} 
+				
+				if($billetTarifReduit){
+					$billet->setPrix(tarifReduit);                
+				} 
+				
+				if($age < 12 && $age >= 4){
+					$billet->setPrix(enfant);
+				} else if($age < 4){
+					$billet->setPrix(bebe);
+				}
+				
+				/* Vérification du nombre d'adulte et du nombre d'enfant */
+				if($age >= 4 && $age < 18){
+					$nbEnfant++;
+				} else if($age >= 18){
+					$nbAdulte++;
+				}
+			}
         }
         
         
@@ -62,20 +70,22 @@ class JMTarificationBillet
                 $ia = 2;
                 foreach($listeBillets as $billet){
                     /* Recuperation de l'age et du prix pour comparaison */
-                    $ageBis = $billet->getAge();
-                    $prixBis = $billet->getPrix();
-                    /* On vérifie que le billet n'a pas déjà été passé en tarif famille */
-                    if($billetFamille > 0 && $prixBis != 99){
-                        if($ie > 0 && $ageBis < 18 && $ageBis >= 4){
-                            $billet->setPrix(famille);
-                            $ie--;
-                            $billetFamille--;
-                        } else if($ia > 0 && $ageBis >= 18){
-                            $billet->setPrix(famille);
-                            $ia--;
-                            $billetFamille--;
-                        }
-                    }
+					if(!$billet->getPayer()){
+						$ageBis = $billet->getAge();
+						$prixBis = $billet->getPrix();
+						/* On vérifie que le billet n'a pas déjà été passé en tarif famille */
+						if($billetFamille > 0 && $prixBis != 99){
+							if($ie > 0 && $ageBis < 18 && $ageBis >= 4){
+								$billet->setPrix(famille);
+								$ie--;
+								$billetFamille--;
+							} else if($ia > 0 && $ageBis >= 18){
+								$billet->setPrix(famille);
+								$ia--;
+								$billetFamille--;
+							}
+						}
+					}
                 }
             }
             $nbAdulte -= 2;
@@ -87,6 +97,44 @@ class JMTarificationBillet
         }
         $this->em->flush();
         return true;
+    }
+	
+	/* Verificateur de billet unitaire */
+	function setPrixBillet($billet)
+    {
+        /* Définition des variables utiles */
+        $age = 0;
+        $billetTarifReduit = false;
+        $repository = $this->em->getRepository('JMBilleterieBundle:Tarifs');
+        $tarifs = $repository->findAll();
+        /* definition des tarifs */
+        foreach($tarifs as $tarif){
+            define($tarif->getType(), $tarif->getPrix(), true);
+        }
+        /* Pour chaque billets (avec le même nom de famille) le tri est fait en amont */
+		if(!$billet->getPayer()){
+			/* On verifie s'il a un tarif reduit */
+			$billetTarifReduit = $billet->getTarifReduit();
+			/* Recuperation de l'âge */
+			$age = $billet->getAge();
+			/* Definition des prix en fonction de l'âge */
+			if($age >= 60){
+				$billet->setPrix(senior);
+			} else if($age < 60 && $age >= 12){
+				$billet->setPrix(normal);
+			} 
+			
+			if($billetTarifReduit){
+				$billet->setPrix(tarifReduit);                
+			} 
+			
+			if($age < 12 && $age >= 4){
+				$billet->setPrix(enfant);
+			} else if($age < 4){
+				$billet->setPrix(bebe);
+			}
+		}
+        return $billet;
     }
 }
 

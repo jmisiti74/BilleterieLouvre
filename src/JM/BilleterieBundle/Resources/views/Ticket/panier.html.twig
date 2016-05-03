@@ -72,21 +72,7 @@
           </script>
     </form>
     <br>
-    <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
-        <input name="amount" type="hidden" value="{{ prixTotal }}" />
-        <input name="currency_code" type="hidden" value="EUR" />
-        <input name="shipping" type="hidden" value="0" />
-        <input name="tax" type="hidden" value="0.00" />
-        <input name="return" type="hidden" value="http://localhost/BilleterieLouvre/web/app_dev.php/payement/paypal/return" />
-        <input name="cancel_return" type="hidden" value="http://localhost/BilleterieLouvre/web/app_dev.php/panier" />
-        <input name="notify_url" type="hidden" value="http://localhost/BilleterieLouvre/web/app_dev.php/payement/paypal/ipn" />
-        <input name="cmd" type="hidden" value="_xclick" />
-        <input name="business" type="hidden" value="test-vendeur@xjejevbx.fr" />
-        <input name="item_name" type="hidden" value="Billets Musee du Louvre" />
-        <input name="no_note" type="hidden" value="1" />
-        <input name="lc" type="hidden" value="FR" />
-        <input name="bn" type="hidden" value="PP-BuyNowBF" />
-        <input name="custom" type="hidden" value="{{ panierId }}" />
+    <form action="{{ path('billeterie_pay_paypal') }}" method="post">
         <input class="bouton" type="submit" value="Payer avec Paypal" />
     </form>
 {% endblock %}

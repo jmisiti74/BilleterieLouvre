@@ -17,3 +17,10 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+    
+    paypal_ACC_VENDEUR: test-vendeur@xjejevbx.fr
+    paypal_USER: test-vendeur_api1.xjejevbx.fr
+    paypal_PWD: 3ZX34XUX5XYQM8MW
+    paypal_SIGNATURE: An5ns1Kso7MWUdW4ErQKJJJ4qi4-ApqYgrTHXxS40Y3rjheucMT5W625
+    paypal_VERSION: 124.0
+    stripe_KEY: sk_test_cXCQHzx7IQGuUuhh4OXubaNT

@@ -5,3 +5,9 @@ services:
     jm_billeterie.tarifbillet:
         class: JM\BilleterieBundle\TarificationBillet\JMTarificationBillet
         arguments: [@doctrine.orm.entity_manager]
+    jm_billeterie.paybillet:
+        class: JM\BilleterieBundle\PayementBillet\JMPayementBillet
+        arguments: [@doctrine.orm.entity_manager, '%paypal_ACC_VENDEUR%', '%paypal_USER%', '%paypal_PWD%', '%paypal_SIGNATURE%', '%paypal_VERSION%', '%stripe_KEY%']
+    jm_billeterie.pdfbillet:
+        class: JM\BilleterieBundle\PdfBillet\JMPdfBillet
+        arguments: [@twig, @mailer, @doctrine.orm.entity_manager]

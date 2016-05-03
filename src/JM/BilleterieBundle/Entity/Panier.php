@@ -102,5 +102,3 @@ class Panier
         return $this->prixTotal;
     }
 }
-
-?>

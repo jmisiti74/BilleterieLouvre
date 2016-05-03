@@ -26,12 +26,16 @@ billeterie_pay_stripe:
     path:   /payement/stripe
     defaults: { _controller: JMBilleterieBundle:Payement:stripe }
     
-billeterie_pay_paypal_ipn:
-    path:   /payement/paypal/ipn
-    defaults: { _controller: JMBilleterieBundle:Payement:paypalIpn }
+billeterie_pay_paypal:
+    path:   /payement/paypal/pay
+    defaults: { _controller: JMBilleterieBundle:Payement:paypal }
 
-billeterie_pay_paypal_return:
-    path:   /payement/paypal/return
+billeterie_pay_paypal_success:
+    path:   /payement/paypal/success
+    defaults: { _controller: JMBilleterieBundle:Payement:paypalSuccess }
+
+billeterie_pay_paypal_cancel:
+    path:   /payement/paypal/cancel
     defaults: { _controller: JMBilleterieBundle:Payement:paypalReturn }
 
 billeterie_pdf:

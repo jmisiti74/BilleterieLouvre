@@ -94,5 +94,3 @@ class JourInterdit
         return $this->message;
     }
 }
-
-?>

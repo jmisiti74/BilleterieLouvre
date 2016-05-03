@@ -16,8 +16,10 @@ class TicketController extends Controller
     {
         return $this->render('JMBilleterieBundle:Ticket:ticketChoice.html.twig');
     }
-    public function infosAction()
+    public function infosAction(Request $request)
     {
+        $session = $request->getSession();
+        $session->remove('Panier');
         return $this->render('JMBilleterieBundle:Ticket:infos.html.twig');
     }
     public function panierAction(Request $request)
@@ -101,7 +103,7 @@ class TicketController extends Controller
             }
         }
         $tarificateurDeBillet = $this->get('jm_billeterie.tarifbillet');
-        if($tarificateurDeBillet->setPrixBillet($listeBilletsNom)){
+        if($tarificateurDeBillet->setPrixBillets($listeBilletsNom)){
             return $this->redirect($this->generateUrl('billeterie_panier'));            
         }
         
@@ -112,17 +114,18 @@ class TicketController extends Controller
     {
         $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
-        if(!$session->has('Panier')){
+		$panierVerif = $session->get('Panier');
+		if(empty($panierVerif)){
             $panier = new Panier();
             $em->persist($panier);
             $em->flush();
             $session->set('Panier', $panier->getId());
-        } else if(empty($session->get('Panier'))){
+        } else if(!isset($panierVerif)){
             $panier = new Panier();
             $em->persist($panier);
             $em->flush();
-            $session->set('Panier', $panier->getId());            
-        }
+            $session->set('Panier', $panier->getId());			
+		}
         $nbBillet = new NbBillet();
         $form = $this->get('form.factory')->create(new NbrBilletType(), $nbBillet);
         if($form->handleRequest($request)->isValid()) {
@@ -144,7 +147,7 @@ class TicketController extends Controller
     }
     
     public function addTicketE2Action($demiJour, $nbBillet, Request $request)
-    {   
+    {
         $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
         /* Chargement du service de tarification de billet */   
@@ -164,14 +167,14 @@ class TicketController extends Controller
                 $request->getSession()->getFlashBag()->add('alert', 'Liste de billets vide...');
                 return $this->redirect($this->generateUrl('billeterie'));
             }
-            if($tarificateurDeBillet->setPrixBillet($listeBillets)){
-                $request->getSession()->getFlashBag()->add('alert', 'Tous les billets pour la famille ' . $_SESSION["nom"] . ' ont été valider.');
+            if($tarificateurDeBillet->setPrixBillets($listeBillets)){
+                $request->getSession()->getFlashBag()->set('alert', 'Tous les billets pour la famille ' . $session->get('nom') . ' ont été valider.');
                 return $this->redirect($this->generateUrl('billeterie'));
             }
             $session = $request->getSession();
             $session->getFlashBag()->add('alert', "STOP!!");
             $url = $this->get('router')->generate('billeterie');
-            return new RedirectResponse($url);  
+            return new RedirectResponse($url);
             
         } else if($nbBillet > 30) {
             $request->getSession()->getFlashBag()->add('alert', 'Attention, vous ne pouvez pas créer plus de 30 billets d\'un coups ! ');
@@ -187,7 +190,6 @@ class TicketController extends Controller
             $form = $this->get('form.factory')->create(new BilletType(), $billet);
             /* Chargement du service de vérification de billet */
             $verificateurDeBillet = $this->get('jm_billeterie.verifbillet');
-
             if($form->handleRequest($request)->isValid()) {
                 /* Si le formulaire est OK, création du code unique du billet via la fonction uniqid() */
                 $billet->setCodeUnique(uniqid('', true));
@@ -201,17 +203,16 @@ class TicketController extends Controller
 
                 /* On vérifie que le billet est correct vià le service de vérification */
                 if($verificateurDeBillet->isValidBillet($billet, $request)){
-                    
                     /* Ajout d'un flashbag de confirmation de création du billet */
-                    $request->getSession()->getFlashBag()->add('alert', 'Billet enregistrer avec succès dans le panier');
+					$nbBillet -= 1;
+                    $request->getSession()->getFlashBag()->add('alert', 'Billet enregistrer avec succès dans le panier il vous en reste ' . $nbBillet . ' à faire.');
                 } else {
                     /* Si le billet n'est pas valider on affiche un méssage d'érreur */
                     $request->getSession()->getFlashBag()->add('alert', $session->get('error'));
                     return $this->redirect($this->generateUrl('billeterie'));                    
                 }
-                $em->persist($billet);
+                $em->persist($tarificateurDeBillet->setPrixBillet($billet));
                 $em->flush();
-                $nbBillet -= 1;
                 $url = $this->get('router')->generate(
                 'billeterie_ticketadde2',
                 array('demiJour' => $demiJour,
@@ -221,7 +222,7 @@ class TicketController extends Controller
                 return new RedirectResponse($url);
             }
         }
-        return $this->render('JMBilleterieBundle:Ticket:AddTicket.html.twig', array(
+        return $this->render('JMBilleterieBundle:Ticket:addTicket.html.twig', array(
             'form' => $form->createView(),
             'demiJour' => $demiJour,
             'nbBillet' => $nbBillet,

@@ -69,7 +69,7 @@ class NbBillet
      *
      * @param integer $nombre
      *
-     * @return nbBillet
+     * @return NbBillet
      */
     public function setNombre($nombre)
     {
@@ -93,7 +93,7 @@ class NbBillet
      *
      * @param \DateTime $dateReservation
      *
-     * @return nbBillet
+     * @return NbBillet
      */
     public function setDateReservation($dateReservation)
     {
@@ -160,5 +160,3 @@ class NbBillet
         return $this->nom;
     }
 }
-
-?>

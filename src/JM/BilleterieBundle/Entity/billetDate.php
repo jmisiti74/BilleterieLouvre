@@ -51,7 +51,7 @@ class BilletDate
      *
      * @param \DateTime $date
      *
-     * @return billetDate
+     * @return BilletDate
      */
     public function setDate($date)
     {
@@ -75,7 +75,7 @@ class BilletDate
      *
      * @param integer $placePrise
      *
-     * @return billetDate
+     * @return BilletDate
      */
     public function setPlacePrise($placePrise)
     {
@@ -106,5 +106,3 @@ class BilletDate
         return $this;
     }
 }
-
-?>

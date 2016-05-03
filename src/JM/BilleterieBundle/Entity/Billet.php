@@ -484,5 +484,3 @@ class Billet
         return $this->panier;
     }
 }
-
-?>

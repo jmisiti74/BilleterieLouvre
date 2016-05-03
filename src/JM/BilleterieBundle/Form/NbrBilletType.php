@@ -18,7 +18,7 @@ class NbrBilletType extends AbstractType
         $builder
             ->add('nombre')
             ->add('nom')
-            ->add('dateReservation', DateType::class, array(
+            ->add('dateReservation', 'date', array(
                 'widget' => 'choice',
                 'years' => range(16,21)
             ))
