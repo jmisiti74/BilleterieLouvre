@@ -2,9 +2,6 @@
 
 namespace JM\BilleterieBundle\PdfBillet;
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
 
@@ -32,14 +29,14 @@ class JMPdfBillet
         $listeBillets = $repositoryBillet->findBy(
             array('panier' => $panier)
         );
-        $html2pdf->pdf->SetSubject('Billet Musée du Louvre');
-        $html2pdf->pdf->SetAuthor('Musée du Louvre ©');
-        $html2pdf->pdf->SetTitle('Billet_Musée_Louvre');
+        $html2pdf->pdf->SetSubject('Billet MusÃ©e du Louvre');
+        $html2pdf->pdf->SetAuthor('MusÃ©e du Louvre');
+        $html2pdf->pdf->SetTitle('Billet_MusÃ©e_Louvre');
 		$message = \Swift_Message::newInstance()
-			->setSubject('Billet Musée du Louvre')
-			->setFrom(array('museelouvre@mdl.fr' => 'Musée du louvre'))
+			->setSubject('Billet MusÃ©e du Louvre')
+			->setFrom(array('museelouvre@mdl.fr' => 'MusÃ©e du louvre'))
 			->setBody('')
-			->addPart('Bonjour, voilà vos billets pour le musée du Louvre. N\'oubliez pas de venir avec vos justificatifs !')
+			->addPart('Bonjour, voilÃ  vos billets pour le musÃ©e du Louvre. N\'oubliez pas de venir avec vos justificatifs !')
 		;
         foreach ($listeBillets as $billet){
 			if($billet->getPayer()){

@@ -1,13 +1,10 @@
 <?php
 
-namespace JM\BilleterieBundle\PayementBillet;
+namespace JM\BilleterieBundle\PayementBillet; 
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use JM\BilleterieBundle\Entity\BilletDate;
 use JM\BilleterieBundle\Entity\Billet;
-use JM\BilleterieBundle\Entity\Panier;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
 
@@ -69,7 +66,7 @@ class JMPayementBillet
 			'PAYMENTREQUEST_0_AMT' => $panier->getPrixTotal(),
 			'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR',
 			
-			'L_PAYMENTREQUEST_0_NAME0' => 'Billet Musée du Louvre',
+			'L_PAYMENTREQUEST_0_NAME0' => 'Billet MusÃ©e du Louvre',
 			'L_PAYMENTREQUEST_0_AMT0' => $panier->getPrixTotal()
 		);
 		$params = http_build_query($params);
@@ -147,9 +144,9 @@ class JMPayementBillet
 		} else {
 			/* Verification de la Vente */
 			if($responseArray['ACK'] === 'Success'){
-				/* es-que l'argent donné est bien de la même valeur que le prix */
+				/* es-que l'argent donnÃ© est bien de la mÃªme valeur que le prix */
 				if($responseArray['PAYMENTREQUEST_0_ITEMAMT'] === $prixTotal){
-					/* es-que l'argent a bien été reversé au bon vendeur */
+					/* es-que l'argent a bien Ã©tÃ© reversÃ© au bon vendeur */
 					if($responseArray['PAYMENTREQUEST_0_SELLERPAYPALACCOUNTID'] === $this->paypalAccVendeur){
 						/* Si tout est bon, mise a jour du nombre de billets vendu pour cette date et on passe les billets en mode "Payer" */
 						foreach($listeBillets as $billet){
@@ -158,7 +155,7 @@ class JMPayementBillet
 								 array('date' => $dateReservation)
 							);
 							$billet->setPayer(true);
-							/* SI il n'éxiste pas de ligne pour la date du billet, on en crée une et on ajoute 1 place prise */
+							/* SI il n'Ã©xiste pas de ligne pour la date du billet, on en crÃ©e une et on ajoute 1 place prise */
 							if(!isset($billetDates[0])){
 								$billetDate = new BilletDate();
 								$billetDate->setDate($dateReservation);
@@ -166,7 +163,7 @@ class JMPayementBillet
 								$this->em->persist($billetDate);
 								$this->em->flush();
 							} else {
-								/* SI il éxiste déjà une ligne pour cette date, on ajoute juste une place prise */
+								/* SI il Ã©xiste dÃ©jÃ  une ligne pour cette date, on ajoute juste une place prise */
 								foreach ($billetDates as $billetDate) {
 									$billetDate->addPlacePrise();
 								}
@@ -210,14 +207,14 @@ class JMPayementBillet
             ));
             foreach($listeBillets as $billet){
                 $billet->setPayer(true);
-                /* On récupère la date de la reservation du billet */
+                /* On rÃ©cupere la date de la reservation du billet */
                 $dateReservation = $billet->getDateReservation();
-                /* Chargement de la liste des billets pris par date on ne récupère que pour la date du billet */
+                /* Chargement de la liste des billets pris par date on ne rÃ©cupÃ©re que pour la date du billet */
                 $billetDates = $repository->findBy(
                      array('date' => $dateReservation)
                 );                
 
-                /* SI il n'éxiste pas de ligne pour la date du billet, on en crée une et on ajoute 1 place prise */
+                /* SI il n'Ã©xiste pas de ligne pour la date du billet, on en crÃ©e une et on ajoute 1 place prise */
                 if(!isset($billetDates[0])){
                     $billetDate = new BilletDate();
                     $billetDate->setDate($dateReservation);
@@ -225,15 +222,15 @@ class JMPayementBillet
                     $this->em->persist($billetDate);
 					$this->em->flush();
                 } else {
-                    /* SI il éxiste déjà une ligne pour cette date, on ajoute juste une place prise */
+                    /* SI il Ã©xiste dÃ©jÃ  ne ligne pour cette date, on ajoute juste une place prise */
                     foreach ($billetDates as $billetDate) {
                         $billetDate->addPlacePrise();
                     }
 					$this->em->persist($billetDate);
 					$this->em->persist($billet);
-					$this->em->flush();
                 }
             }
+			$this->em->flush();
         } catch(\Stripe\Error\Card $e) {
             $session = $request->getSession();
             $session->getFlashBag()->add('alert', "Carte invalide");

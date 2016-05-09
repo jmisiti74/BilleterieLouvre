@@ -3,8 +3,6 @@ namespace JM\BilleterieBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class PayementController extends Controller
@@ -38,6 +36,14 @@ class PayementController extends Controller
 			$url = $this->get('router')->generate('billeterie_pdf');
 			return new RedirectResponse($url);
 		}
+    }
+    public function paypalReturnAction(Request $request)
+    {
+		$session = $request->getSession();
+		$router = $this->get('router');
+        $session->getFlashBag()->add('alert', "Vous avez annuler votre payement Paypal.");
+        $url = $this->get('router')->generate('billeterie_panier');
+        return new RedirectResponse($url);
     }
     /* ^^^ POUR PAYPAL ^^^ */
     

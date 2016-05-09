@@ -1,47 +1,59 @@
 billeterie_ticketadde1:
     path:   /Creation/Etape1/{demiJour}
     defaults: { _controller: JMBilleterieBundle:Ticket:addTicketE1 }
+    methods:  [GET, HEAD, POST]
 
 billeterie_ticketadde2:
     path:   /Creation/Etape2/{demiJour}/{nbBillet}
     defaults: { _controller: JMBilleterieBundle:Ticket:addTicketE2 }
-    
+    methods:  [GET, HEAD, POST]
+
 billeterie:
     path:   /
     defaults: { _controller: JMBilleterieBundle:Ticket:view }
+    methods:  [GET, HEAD, POST]
     
 billeterie_panier:
     path:   /Panier
     defaults: { _controller: JMBilleterieBundle:Ticket:panier }
+    methods:  [GET, HEAD, POST]
     
 billeterie_panier_vider:
     path:   /Panier/clear{id}
     defaults: { _controller: JMBilleterieBundle:Ticket:panierclear }
+    methods:  [GET, HEAD, POST]
     
 billeterie_infos:
     path:   /infos
     defaults: { _controller: JMBilleterieBundle:Ticket:infos }
+    methods:  [GET, HEAD, POST]
     
 billeterie_pay_stripe:
     path:   /payement/stripe
     defaults: { _controller: JMBilleterieBundle:Payement:stripe }
+    methods:  [GET, HEAD, POST]
     
 billeterie_pay_paypal:
     path:   /payement/paypal/pay
     defaults: { _controller: JMBilleterieBundle:Payement:paypal }
+    methods:  [GET, HEAD, POST]
 
 billeterie_pay_paypal_success:
     path:   /payement/paypal/success
     defaults: { _controller: JMBilleterieBundle:Payement:paypalSuccess }
+    methods:  [GET, HEAD, POST]
 
 billeterie_pay_paypal_cancel:
     path:   /payement/paypal/cancel
     defaults: { _controller: JMBilleterieBundle:Payement:paypalReturn }
+    methods:  [GET, HEAD, POST]
 
 billeterie_pdf:
     path:   /pdf
     defaults: { _controller: JMBilleterieBundle:Pdf:pdf }
+    methods:  [GET, HEAD, POST]
 
 billeterie_after_payement:
     path:   /payement/done
     defaults: { _controller: JMBilleterieBundle:Payement:done }
+    methods:  [GET, HEAD, POST]
