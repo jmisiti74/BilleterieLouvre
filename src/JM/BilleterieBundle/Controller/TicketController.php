@@ -16,12 +16,6 @@ class TicketController extends Controller
     {
         return $this->render('JMBilleterieBundle:Ticket:ticketChoice.html.twig');
     }
-    public function infosAction(Request $request)
-    {
-        $session = $request->getSession();
-        $session->remove('Panier');
-        return $this->render('JMBilleterieBundle:Ticket:infos.html.twig');
-    }
     public function panierAction(Request $request)
     {   
         $session = $request->getSession();

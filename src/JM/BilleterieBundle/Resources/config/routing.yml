@@ -23,11 +23,6 @@ billeterie_panier_vider:
     defaults: { _controller: JMBilleterieBundle:Ticket:panierclear }
     methods:  [GET, HEAD, POST]
     
-billeterie_infos:
-    path:   /infos
-    defaults: { _controller: JMBilleterieBundle:Ticket:infos }
-    methods:  [GET, HEAD, POST]
-    
 billeterie_pay_stripe:
     path:   /payement/stripe
     defaults: { _controller: JMBilleterieBundle:Payement:stripe }
